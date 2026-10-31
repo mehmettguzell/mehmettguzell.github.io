@@ -2,6 +2,7 @@
   {
     "slug": "tempo-desktop",
     "name": "Tempo: Calendar, Tasks & Budget App",
+    "short_name": "Tempo",
     "in_progress": true,
     "context": {
       "en": "Personal project",
@@ -263,6 +264,7 @@
   {
     "slug": "geo-visibility-platform",
     "name": "AI Visibility & GEO Intelligence Platform",
+    "short_name": "GEO Visibility",
     "tagline": {
       "en": "A GEO (Generative Engine Optimization) analysis system that measures how visible brands are in LLM answers, compares them with competitors and reports prompt coverage, appearance and recommendation rates with confidence intervals. I derived the requirements from technical documentation and earlier research, then designed and built it with independent decisions (internship).",
       "tr": "Markaların LLM yanıtlarındaki görünürlüğünü ölçen, rakiplerle karşılaştıran ve prompt kapsamasını, görünme ve önerilme oranlarını güven aralıklarıyla raporlayan bir GEO (Generative Engine Optimization) analiz sistemi. Gereksinimleri teknik dokümantasyon ve geçmiş araştırmalardan çıkardım; mimariyi ve teknoloji seçimlerini kendim belirleyerek tasarlayıp geliştirdim."
@@ -500,6 +502,7 @@
   {
     "slug": "stop",
     "name": "STOP",
+    "short_name": "STOP",
     "tagline": {
       "en": "A football match organization platform built with a microservices architecture. The React Native mobile app connects to five independent Spring Boot services, using event-driven communication, service-level security and automated AWS deployments.",
       "tr": "Mikroservis mimarisiyle geliştirilen bir futbol maçı organizasyon platformu. React Native mobil uygulaması; olay tabanlı iletişim, servis düzeyinde güvenlik ve otomatik AWS dağıtımıyla desteklenen beş bağımsız Spring Boot servisiyle çalışır."
@@ -696,6 +699,7 @@
   {
     "slug": "devops-todo-app",
     "name": "DevOps Todo App",
+    "short_name": "DevOps Todo",
     "tagline": {
       "en": "A learning project for exploring DevOps fundamentals through automated testing, Docker, CI/CD pipelines and secure AWS deployment.",
       "tr": "Otomatik testler, Docker, CI/CD pipeline'ları ve AWS üzerinde güvenli dağıtım aracılığıyla DevOps temellerini öğrenmek için geliştirdiğim bir proje."
@@ -837,6 +841,7 @@
   {
     "slug": "order-management",
     "name": "Event-Driven Order Management Platform",
+    "short_name": "Order Platform",
     "tagline": {
       "en": "An online-shop backend where orders, stock and payment stay consistent across 5 services.",
       "tr": "Sipariş, stok ve ödemenin 5 servis arasında tutarlı kaldığı bir online mağaza backend'i."
@@ -961,6 +966,7 @@
   {
     "slug": "inventory-microservices",
     "name": "Inventory Management Microservices",
+    "short_name": "Inventory",
     "tagline": {
       "en": "A stock-tracking system of 4 Spring Boot services, each using the database that fits it best.",
       "tr": "Her biri kendine uygun veritabanını kullanan 4 Spring Boot servisinden oluşan stok takip sistemi."

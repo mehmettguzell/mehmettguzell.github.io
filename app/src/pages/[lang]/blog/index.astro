@@ -16,8 +16,8 @@ const date_format = new Intl.DateTimeFormat(lang, { dateStyle: 'medium' });
 
 <Layout lang={lang} title={`${t(lang, 'blog.title')} · Mehmet Güzel`} description={t(lang, 'meta.blog_description')}>
 	<section class="blog-list container">
-		<p class="eyebrow">{t(lang, 'blog.eyebrow')}</p>
 		<h1 class="section__title">{t(lang, 'blog.heading')}</h1>
+		<p class="section__lead">{t(lang, 'blog.lead')}</p>
 		<UpcomingTopics lang={lang} />
 		{feed.length === 0 && <p>{t(lang, 'blog.empty')}</p>}
 		{
@@ -123,12 +123,17 @@ const date_format = new Intl.DateTimeFormat(lang, { dateStyle: 'medium' });
 	.blog-list__tag {
 		padding: 0.3rem 0.85rem;
 		border: 1px solid var(--border);
-		border-radius: 999px;
+		border-radius: var(--radius);
 		background: var(--surface);
 		color: var(--muted);
 		font-family: var(--font-heading);
 		font-size: 0.8rem;
 		cursor: pointer;
+	}
+
+	.blog-list__tag:hover {
+		border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+		color: var(--text);
 	}
 
 	.blog-list__tag[aria-pressed='true'] {

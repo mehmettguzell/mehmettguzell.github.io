@@ -1,22 +1,8 @@
 [
   {
     "label": {
-      "en": "Languages",
-      "tr": "Diller"
-    },
-    "skills": [
-      "Java 21",
-      "Python",
-      "Go",
-      "TypeScript",
-      "SQL",
-      "Bash"
-    ]
-  },
-  {
-    "label": {
-      "en": "Backend",
-      "tr": "Backend"
+      "en": "Backend & Testing",
+      "tr": "Backend ve Test"
     },
     "skills": [
       "Spring Boot",
@@ -31,23 +17,32 @@
       "Event-Driven Architecture",
       "Saga pattern",
       "Resilience4j",
-      "Bucket4j"
+      "Bucket4j",
+      "JUnit",
+      "Testcontainers",
+      "RestAssured",
+      "pytest"
     ]
   },
   {
     "label": {
-      "en": "Security",
-      "tr": "Güvenlik"
+      "en": "DevOps & Cloud",
+      "tr": "DevOps ve Bulut"
     },
     "skills": [
-      "OWASP Top 10",
-      "Secure code review",
-      "Web application pentest",
-      "JWT (RSA)",
-      "OAuth2/OIDC",
-      "Rate limiting",
-      "Secret management (Secrets Manager, SSM)",
-      "Responsible disclosure"
+      "GitHub Actions",
+      "Docker",
+      "Docker Compose",
+      "GHCR",
+      "release-please",
+      "Nginx",
+      "Linux (Ubuntu)",
+      "Prometheus",
+      "AWS EC2",
+      "IAM",
+      "SSM",
+      "Secrets Manager",
+      "OIDC"
     ]
   },
   {
@@ -68,55 +63,36 @@
   },
   {
     "label": {
-      "en": "DevOps & CI/CD",
-      "tr": "DevOps ve CI/CD"
+      "en": "Security",
+      "tr": "Güvenlik"
     },
     "skills": [
-      "GitHub Actions",
-      "Docker",
-      "Docker Compose",
-      "GHCR",
-      "release-please",
-      "Nginx",
-      "Linux (Ubuntu)",
-      "Prometheus"
+      "OWASP Top 10",
+      "Secure code review",
+      "Web application pentest",
+      "JWT (RSA)",
+      "OAuth2/OIDC",
+      "Rate limiting",
+      "Secret management (Secrets Manager, SSM)",
+      "Responsible disclosure"
     ]
   },
   {
     "label": {
-      "en": "Cloud",
-      "tr": "Bulut"
+      "en": "Languages & Frontend",
+      "tr": "Diller ve Frontend"
     },
     "skills": [
-      "AWS EC2",
-      "IAM",
-      "SSM",
-      "Secrets Manager",
-      "OIDC"
-    ]
-  },
-  {
-    "label": {
-      "en": "Frontend",
-      "tr": "Frontend"
-    },
-    "skills": [
+      "Java 21",
+      "Python",
+      "Go",
+      "TypeScript",
+      "SQL",
+      "Bash",
       "React",
       "React Native",
       "Next.js",
       "TailwindCSS"
-    ]
-  },
-  {
-    "label": {
-      "en": "Testing",
-      "tr": "Test"
-    },
-    "skills": [
-      "JUnit",
-      "Testcontainers",
-      "RestAssured",
-      "pytest"
     ]
   },
   {

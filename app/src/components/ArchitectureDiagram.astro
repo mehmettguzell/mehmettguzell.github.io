@@ -152,7 +152,7 @@ const accessible_label = `${label}: ${layers.map((layer) => `${layer.link ? `(${
 		min-width: 0;
 		padding: 0.55rem 0.4rem;
 		border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
-		border-radius: 0.55rem;
+		border-radius: var(--radius);
 		background:
 			linear-gradient(180deg, color-mix(in srgb, var(--accent) 14%, transparent), transparent),
 			var(--bg);
@@ -199,7 +199,7 @@ const accessible_label = `${label}: ${layers.map((layer) => `${layer.link ? `(${
 		margin-top: 1rem;
 		padding: 0.6rem 0.8rem;
 		border: 1px solid var(--border);
-		border-radius: 0.55rem;
+		border-radius: var(--radius);
 		background: color-mix(in srgb, var(--bg) 75%, transparent);
 		color: var(--muted);
 		font-size: 0.72rem;

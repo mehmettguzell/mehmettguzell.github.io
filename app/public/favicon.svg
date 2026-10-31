@@ -1,4 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-    <rect width="64" height="64" rx="14" fill="#05070f" />
-    <text x="32" y="43" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#2dd4bf">MG</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="4" fill="#1f4a39"/><g transform="translate(0 -4)" fill="#ece9df"><path d="M9 46V15h7.5l4.5 15.5L25.5 15H33v31h-6.2V28.5L23.4 41h-4.8l-3.4-12.5V46z"/><path d="M55 25.5h-6.5c0-3.2-1.4-4.7-3.9-4.7s-3.9 1.5-3.9 4.7v10c0 3.2 1.4 4.7 3.9 4.7s3.9-1.5 3.9-4.7v-1.7h-4.3v-5.4H55V46h-4.6l-.6-2.6c-1.5 2-3.6 3.1-6.5 3.1-6 0-9.3-3.9-9.3-10.4V25.3c0-6.5 3.6-10.6 10.1-10.6 6.4 0 9.9 3.6 9.9 9.6z"/></g><rect x="9" y="48" width="46" height="7" fill="#e2b52c"/></svg>

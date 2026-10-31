@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../../../layouts/Layout.astro';
+import Icon from '../../../../components/Icon.astro';
 import { languages, t, default_language, localized_path, type Language } from '../../../../i18n';
 import { get_published_posts_newest_first, get_series_posts_in_order } from '../../../../lib/blog';
 
@@ -19,9 +20,9 @@ const unwritten_orders = Array.from({ length: series.data.total_posts }, (_, ind
 
 <Layout lang={lang} title={`${series.data.title} · Mehmet Güzel`} description={series.data.summary}>
 	<section class="series container">
-		<a class="series__back" href={localized_path(lang, '/blog/')}>← {t(lang, 'blog.title')}</a>
-		<p class="eyebrow">{t(lang, 'blog.series')} · {series_posts.length}/{series.data.total_posts} {t(lang, 'blog.series_written')}</p>
+		<a class="series__back" href={localized_path(lang, '/blog/')}><Icon name="arrow-left" /> {t(lang, 'blog.title')}</a>
 		<h1 class="section__title" lang={series.data.lang}>{series.data.title}</h1>
+		<p class="series__status">{t(lang, 'blog.series')} · {series_posts.length}/{series.data.total_posts} {t(lang, 'blog.series_written')}</p>
 		<div class="series__intro" lang={series.data.lang}>
 			<p>{series.data.summary}</p>
 			<Content />
@@ -46,6 +47,7 @@ const unwritten_orders = Array.from({ length: series.data.total_posts }, (_, ind
 				unwritten_orders.map((order) => (
 					<li class="series__post series__post--pending">
 						<span class="series__order">{order}</span>
+						<span class="series__meta">{t(lang, 'blog.series_pending')}</span>
 					</li>
 				))
 			}
@@ -64,6 +66,15 @@ const unwritten_orders = Array.from({ length: series.data.total_posts }, (_, ind
 		font-family: var(--font-heading);
 		font-size: 0.85rem;
 		text-decoration: none;
+	}
+
+	.series__status {
+		margin-top: 0.75rem;
+		color: var(--muted);
+		font-weight: 700;
+		font-stretch: 80%;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
 	}
 
 	.series__intro {
@@ -88,8 +99,8 @@ const unwritten_orders = Array.from({ length: series.data.total_posts }, (_, ind
 
 	.series__post--pending {
 		border: 1px dashed var(--border);
-		border-radius: 1rem;
-		opacity: 0.55;
+		border-radius: var(--radius);
+		opacity: 0.7;
 	}
 
 	.series__order {
