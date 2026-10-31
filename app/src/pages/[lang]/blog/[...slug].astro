@@ -1,8 +1,8 @@
 ---
-import { render } from 'astro:content';
+import { getEntry, render } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
+import Icon from '../../../components/Icon.astro';
 import { languages, t, default_language, localized_path, type Language } from '../../../i18n';
-import { getEntry } from 'astro:content';
 import { estimate_reading_minutes, get_adjacent_series_posts, get_published_posts_newest_first } from '../../../lib/blog';
 
 export async function getStaticPaths() {
@@ -22,8 +22,8 @@ const { previous, next } = get_adjacent_series_posts(published_posts, post);
 
 <Layout lang={lang} title={`${post.data.title} · Mehmet Güzel`} description={post.data.summary} canonical_path={localized_path(post.data.lang, `/blog/${post.id}/`)}>
 	<article class="post" lang={post.data.lang}>
-		<a class="post__back" href={localized_path(lang, '/blog/')}>← {t(lang, 'blog.title')}</a>
-		<h1 class="gradient-text">{post.data.title}</h1>
+		<a class="post__back" href={localized_path(lang, '/blog/')}><Icon name="arrow-left" /> {t(lang, 'blog.title')}</a>
+		<h1>{post.data.title}</h1>
 		<p class="post__meta">
 			<time datetime={post.data.date.toISOString()}>{date_format.format(post.data.date)}</time>
 			· {estimate_reading_minutes(post)} {t(lang, 'blog.reading_minutes')}
@@ -45,14 +45,14 @@ const { previous, next } = get_adjacent_series_posts(published_posts, post);
 				<nav class="post__series-nav" aria-label={series.data.title}>
 					{previous ? (
 						<a href={post_path(previous)}>
-							← {t(lang, 'blog.previous')}: {previous.data.title}
+							<Icon name="arrow-left" /> {t(lang, 'blog.previous')}: {previous.data.title}
 						</a>
 					) : (
 						<span />
 					)}
 					{next && (
 						<a href={post_path(next)}>
-							{t(lang, 'blog.next')}: {next.data.title} →
+							{t(lang, 'blog.next')}: {next.data.title} <Icon name="arrow-right" />
 						</a>
 					)}
 				</nav>
@@ -76,8 +76,12 @@ const { previous, next } = get_adjacent_series_posts(published_posts, post);
 
 	.post h1 {
 		margin: 1.25rem 0 0.75rem;
-		font-size: clamp(2rem, 5.5vw, 3.2rem);
+		font-size: clamp(2.2rem, 6vw, 3.8rem);
 		font-weight: 800;
+		font-stretch: 72%;
+		line-height: 0.98;
+		text-transform: uppercase;
+		text-wrap: balance;
 	}
 
 	.post__meta {
@@ -98,6 +102,7 @@ const { previous, next } = get_adjacent_series_posts(published_posts, post);
 
 	.post__series-nav {
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-between;
 		gap: 1rem;
 		margin-top: 3rem;
@@ -105,6 +110,21 @@ const { previous, next } = get_adjacent_series_posts(published_posts, post);
 		border-top: 1px solid var(--border);
 		font-family: var(--font-heading);
 		font-size: 0.9rem;
+	}
+
+	.post__series-nav a {
+		max-width: 22rem;
+		text-decoration: none;
+	}
+
+	.post__series-nav a:last-child {
+		margin-left: auto;
+		text-align: right;
+	}
+
+	.post__series-nav a:hover {
+		text-decoration: underline;
+		text-underline-offset: 0.25em;
 	}
 
 	.post__body {
@@ -133,7 +153,7 @@ const { previous, next } = get_adjacent_series_posts(published_posts, post);
 	.post__body :global(code:not(pre code)) {
 		padding: 0.1em 0.4em;
 		border: 1px solid var(--border);
-		border-radius: 0.4rem;
+		border-radius: 0.2rem;
 		background: var(--surface);
 		font-family: var(--font-heading);
 		font-size: 0.88em;
@@ -143,7 +163,7 @@ const { previous, next } = get_adjacent_series_posts(published_posts, post);
 		margin-bottom: 1.5rem;
 		padding: 1.2rem;
 		border: 1px solid var(--border);
-		border-radius: 1rem;
+		border-radius: var(--radius);
 		overflow-x: auto;
 		font-size: 0.875rem;
 		line-height: 1.6;
@@ -152,6 +172,11 @@ const { previous, next } = get_adjacent_series_posts(published_posts, post);
 	.post__body :global(.pipeline-diagram) {
 		max-width: 28rem;
 		margin-bottom: 1.5rem;
+	}
+
+	/* Code sits on the exhibit label stock instead of Shiki's pure white sheet. */
+	:global(:root:not([data-theme='dark'])) .post__body :global(.astro-code) {
+		background-color: var(--surface-strong) !important;
 	}
 
 	:global(:root[data-theme='dark']) .post__body :global(.astro-code),

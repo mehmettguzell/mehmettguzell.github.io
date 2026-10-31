@@ -1,6 +1,7 @@
 ---
 import ArchitectureDiagram from './ArchitectureDiagram.astro';
 import PipelineDiagram from './PipelineDiagram.astro';
+import Icon from './Icon.astro';
 
 type TabName = 'architecture' | 'pipeline';
 
@@ -8,6 +9,7 @@ interface Props {
 	slug: string;
 	index: number;
 	name: string;
+	short_name: string;
 	context?: string;
 	architecture_styles: string[];
 	status_label?: string;
@@ -38,6 +40,7 @@ const {
 	slug,
 	index,
 	name,
+	short_name,
 	context,
 	architecture_styles,
 	status_label,
@@ -70,11 +73,9 @@ const tab_icon_paths: Record<TabName, string> = {
 
 <div class="project-wrap">
 	<article class:list={['project glass spot', { 'project--in-progress': status_label }]}>
-		<div class="project__bar" aria-hidden="true">
-			<span></span><span></span><span></span>
-			<code>~/projects/{slug}</code>
+		<div class="project__bar placard" aria-hidden="true">
+			<b>No. {String(index + 1).padStart(2, '0')} · {short_name}</b>
 			{status_label && <em class="project__bar-status">{status_label}</em>}
-			<b>{String(index + 1).padStart(2, '0')}</b>
 		</div>
 		<div class="project__body">
 			<div class="project__story">
@@ -116,7 +117,7 @@ const tab_icon_paths: Record<TabName, string> = {
 				{
 					repository && (
 						<a class="btn project__repository" href={repository} rel="noopener" target="_blank">
-							{repository_label} <span aria-hidden="true">↗</span>
+							{repository_label} <Icon name="external" />
 						</a>
 					)
 				}
@@ -182,45 +183,17 @@ const tab_icon_paths: Record<TabName, string> = {
 			box-shadow 0.3s ease;
 	}
 
-	.project:hover {
-		border-color: color-mix(in srgb, var(--accent) 40%, transparent);
-		box-shadow: 0 30px 70px -30px color-mix(in srgb, var(--accent) 35%, transparent);
-	}
-
 	.project__bar {
 		display: flex;
-		align-items: center;
-		gap: 0.4rem;
-		padding: 0.7rem 1.1rem;
-		border-bottom: 1px solid var(--border);
-		background: var(--surface);
-	}
-
-	.project__bar span {
-		width: 0.65rem;
-		height: 0.65rem;
-		border-radius: 50%;
-		background: #ff5f57;
-	}
-
-	.project__bar span:nth-child(2) {
-		background: #febc2e;
-	}
-
-	.project__bar span:nth-child(3) {
-		background: #28c840;
-	}
-
-	.project__bar code {
-		margin-left: 0.6rem;
-		color: var(--muted);
-		font: 400 0.78rem var(--font-heading);
+		align-items: baseline;
+		gap: 1rem;
+		padding: 0.6rem 1.1rem 0.55rem;
+		background: var(--brass);
+		color: var(--brass-ink);
 	}
 
 	.project__bar b {
-		margin-left: auto;
-		color: var(--accent);
-		font: 700 0.78rem var(--font-heading);
+		font-size: 1rem;
 	}
 
 	.project__body {
@@ -261,7 +234,7 @@ const tab_icon_paths: Record<TabName, string> = {
 	.project__badge {
 		padding: 0.2rem 0.7rem;
 		border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
-		border-radius: 999px;
+		border-radius: var(--radius);
 		background: color-mix(in srgb, var(--accent) 10%, transparent);
 		color: var(--accent);
 		font: 700 0.74rem var(--font-heading);
@@ -271,8 +244,8 @@ const tab_icon_paths: Record<TabName, string> = {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.45rem;
-		border-color: color-mix(in srgb, #22c55e 50%, transparent);
-		background: color-mix(in srgb, #22c55e 14%, transparent);
+		border-color: color-mix(in srgb, var(--status) 50%, transparent);
+		background: color-mix(in srgb, var(--status) 14%, transparent);
 		color: var(--text);
 	}
 
@@ -281,7 +254,7 @@ const tab_icon_paths: Record<TabName, string> = {
 		width: 0.45rem;
 		height: 0.45rem;
 		border-radius: 50%;
-		background: #22c55e;
+		background: var(--status);
 	}
 
 	.project__badge--style {
@@ -326,11 +299,8 @@ const tab_icon_paths: Record<TabName, string> = {
 	}
 
 	.project--in-progress {
-		border-color: color-mix(in srgb, #22c55e 45%, transparent);
-		box-shadow:
-			var(--shadow),
-			0 0 0 1px color-mix(in srgb, #22c55e 18%, transparent),
-			0 0 48px -18px color-mix(in srgb, #22c55e 55%, transparent);
+		border-top: 6px solid transparent;
+		border-image: repeating-linear-gradient(-45deg, var(--guide) 0 10px, #151614 10px 20px) 6 0 0 0;
 	}
 
 	.project__bar-status {
@@ -338,9 +308,7 @@ const tab_icon_paths: Record<TabName, string> = {
 		align-items: center;
 		gap: 0.45rem;
 		margin-left: auto;
-		margin-right: 0.8rem;
-		color: #22c55e;
-		font: 700 0.72rem var(--font-heading);
+		font-size: 0.8rem;
 		font-style: normal;
 	}
 
@@ -358,14 +326,6 @@ const tab_icon_paths: Record<TabName, string> = {
 		.project__bar-status {
 			display: none;
 		}
-
-		.project__bar b {
-			margin-left: auto;
-		}
-	}
-
-	.project__bar-status + b {
-		margin-left: 0;
 	}
 
 	@keyframes live-pulse {
@@ -379,9 +339,9 @@ const tab_icon_paths: Record<TabName, string> = {
 		display: grid;
 		gap: 0.6rem;
 		padding: 0.9rem 1rem;
-		border: 1px dashed color-mix(in srgb, #22c55e 50%, transparent);
-		border-radius: 0.8rem;
-		background: color-mix(in srgb, #22c55e 7%, transparent);
+		border: 1px dashed color-mix(in srgb, var(--status) 50%, transparent);
+		border-radius: var(--radius);
+		background: color-mix(in srgb, var(--status) 7%, transparent);
 	}
 
 	.release__title {
@@ -392,7 +352,7 @@ const tab_icon_paths: Record<TabName, string> = {
 		position: relative;
 		height: 0.4rem;
 		overflow: hidden;
-		border-radius: 999px;
+		border-radius: var(--radius);
 		background: color-mix(in srgb, var(--text) 10%, transparent);
 	}
 
@@ -402,7 +362,7 @@ const tab_icon_paths: Record<TabName, string> = {
 		inset: 0;
 		width: 40%;
 		border-radius: inherit;
-		background: linear-gradient(90deg, transparent, #22c55e, transparent);
+		background: linear-gradient(90deg, transparent, var(--status), transparent);
 		animation: release-slide 2.2s ease-in-out infinite;
 	}
 
@@ -436,7 +396,7 @@ const tab_icon_paths: Record<TabName, string> = {
 	}
 
 	.release__platforms b {
-		color: #22c55e;
+		color: var(--status);
 		font: 700 0.72rem var(--font-heading);
 	}
 
@@ -453,7 +413,7 @@ const tab_icon_paths: Record<TabName, string> = {
 		min-width: 0;
 		padding: clamp(0.9rem, 2vw, 1.25rem);
 		border: 1px solid var(--border);
-		border-radius: calc(var(--radius) - 0.35rem);
+		border-radius: var(--radius);
 		background:
 			radial-gradient(circle, var(--grid-line) 1px, transparent 1.2px) 0 0 / 16px 16px,
 			color-mix(in srgb, var(--bg) 55%, transparent);
@@ -483,7 +443,7 @@ const tab_icon_paths: Record<TabName, string> = {
 		margin-top: 1rem;
 		padding: 0.6rem 0.8rem;
 		border: 1px solid var(--border);
-		border-radius: 0.55rem;
+		border-radius: var(--radius);
 		background: color-mix(in srgb, var(--bg) 75%, transparent);
 		color: var(--muted);
 		font: 400 0.72rem/1.55 var(--font-heading);
@@ -501,7 +461,7 @@ const tab_icon_paths: Record<TabName, string> = {
 		max-width: 100%;
 		padding: 0.25rem;
 		border: 1px solid var(--border);
-		border-radius: 999px;
+		border-radius: var(--radius);
 		background: var(--surface);
 		overflow-x: auto;
 		scrollbar-width: none;
@@ -543,7 +503,7 @@ const tab_icon_paths: Record<TabName, string> = {
 		left: 0;
 		width: var(--indicator-width, 0);
 		border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
-		border-radius: 999px;
+		border-radius: var(--radius);
 		background: color-mix(in srgb, var(--accent) 16%, transparent);
 		opacity: 0;
 		translate: var(--indicator-x, 0) 0;
@@ -567,7 +527,7 @@ const tab_icon_paths: Record<TabName, string> = {
 		gap: 0.4rem;
 		padding: 0.4rem 0.85rem;
 		border: 0;
-		border-radius: 999px;
+		border-radius: var(--radius);
 		background: transparent;
 		color: var(--muted);
 		font: 600 0.76rem var(--font-heading);

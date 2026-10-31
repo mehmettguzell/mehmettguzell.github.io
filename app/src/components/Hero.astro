@@ -1,6 +1,8 @@
 ---
 import Wallz from './Wallz.astro';
+import Icon from './Icon.astro';
 import contact from '../data/contact.json';
+import projects from '../data/projects.json';
 import { t, localized_path, type Language } from '../i18n';
 
 interface Props {
@@ -9,123 +11,86 @@ interface Props {
 
 const { lang } = Astro.props;
 
-const glance_keys = ['role', 'based', 'education', 'experience', 'stack', 'languages'] as const;
-const glance_rows = glance_keys.map((key) => ({
+const exhibit_label_keys = ['based', 'education', 'experience', 'stack', 'languages'] as const;
+const exhibit_label_rows = exhibit_label_keys.map((key) => ({
 	label: t(lang, `glance.${key}`),
 	value: t(lang, `glance.${key}_value`),
 }));
+const first_exhibit_count = 3;
+const first_exhibits = projects.slice(0, first_exhibit_count);
 const cv_path = lang === 'tr' ? '/Mehmet_Guzel_CV.pdf' : '/Mehmet_Guzel_CV_EN.pdf';
 ---
 
 <section class="hero" aria-labelledby="hero-title">
-	<div class="container hero__grid">
-		<div class="hero__copy">
-			<p class="hero__status" data-reveal>
-				<span class="hero__status-dot" aria-hidden="true"></span>{t(lang, 'hero.status')}
-			</p>
-			<h1 id="hero-title" class="hero__name" data-reveal style="--delay: 100ms">
-				<span class="gradient-text">Mehmet Güzel</span>
-			</h1>
-			<p class="hero__lead" data-reveal style="--delay: 280ms">{t(lang, 'hero.lead')}</p>
-			<div class="hero__actions" data-reveal style="--delay: 360ms">
-				<a class="btn btn--primary" href={cv_path} download>{t(lang, 'hero.cta_cv')} <span aria-hidden="true">↓</span></a>
-				<a class="btn" href={localized_path(lang, '/#projects')}>{t(lang, 'hero.cta_projects')} →</a>
-			</div>
-			<p class="hero__social" data-reveal style="--delay: 420ms">
-				<a href={contact.github} rel="noopener" target="_blank">GitHub <span aria-hidden="true">↗</span></a>
-				<a href={contact.linkedin} rel="noopener" target="_blank">LinkedIn <span aria-hidden="true">↗</span></a>
-				<a href={`mailto:${contact.email}`}>{contact.email}</a>
-			</p>
-		</div>
-
-		<div class="hero__visual" data-reveal style="--delay: 260ms">
-			<button type="button" class="hero__wallz" data-state="idle" aria-label={t(lang, 'wallz.label')} data-action-status={t(lang, 'wallz.action_status')}>
-				<Wallz />
-			</button>
-			<span class="hero__hint" aria-hidden="true">{t(lang, 'wallz.hint')}</span>
-			<p class="hero__wallz-status" role="status"></p>
-
-			<div class="terminal glass" data-tilt>
-				<div class="terminal__bar" aria-hidden="true">
-					<span></span><span></span><span></span>
-					<b>{t(lang, 'glance.title')}</b>
+	<div class="hero__wall">
+		<div class="container hero__grid">
+			<div class="hero__copy">
+				<h1 id="hero-title" class="hero__name" data-reveal style="--delay: 80ms">
+					<span>Mehmet</span> <span>Güzel</span>
+				</h1>
+				<p class="hero__role" data-reveal style="--delay: 160ms">{t(lang, 'hero.status')}</p>
+				<p class="hero__lead" data-reveal style="--delay: 220ms">{t(lang, 'hero.lead')}</p>
+				<div class="hero__actions" data-reveal style="--delay: 280ms">
+					<a class="push-button" href={cv_path} download>
+						<span class="push-button__cap" aria-hidden="true"></span>
+						<span class="push-button__label">{t(lang, 'hero.cta_cv')} <Icon name="download" /></span>
+					</a>
+					<a class="btn hero__projects" href={localized_path(lang, '/#projects')}>{t(lang, 'hero.cta_projects')} <Icon name="arrow-right" /></a>
 				</div>
-				<div class="glance">
-					<p class="glance__command"><span class="terminal__prompt">$</span><span data-type>cat profile.txt</span></p>
-					<dl class="glance__list">
-						{
-							glance_rows.map((row) => (
-								<div class="glance__row">
-									<dt>{row.label}</dt>
-									<dd data-type>{row.value}</dd>
-								</div>
-							))
-						}
-					</dl>
-					<p class="glance__command glance__idle"><span class="terminal__prompt">$</span><span class="hero__caret" aria-hidden="true"></span></p>
+				<p class="hero__social" data-reveal style="--delay: 340ms">
+					<a href={contact.github} rel="noopener" target="_blank">GitHub <Icon name="external" /></a>
+					<a href={contact.linkedin} rel="noopener" target="_blank">LinkedIn <Icon name="external" /></a>
+					<a href={`mailto:${contact.email}`}>{contact.email}</a>
+				</p>
+			</div>
+
+			<div class="hero__visual" data-reveal style="--delay: 200ms">
+				<div class="hero__stage">
+					<button type="button" class="hero__wallz" data-state="idle" aria-label={t(lang, 'wallz.label')} data-action-status={t(lang, 'wallz.action_status')}>
+						<Wallz />
+					</button>
+					<span class="hero__hint" aria-hidden="true">{t(lang, 'wallz.hint')}</span>
+					<p class="hero__wallz-status" role="status"></p>
+					<span class="hero__plinth" aria-hidden="true"></span>
+				</div>
+				<div class="hero__plate">
+					<p class="hero__plate-title placard">{t(lang, 'hero.exhibit')}</p>
+					<dl class="hero__plate-list">
+					{
+						exhibit_label_rows.map((row) => (
+							<div class="hero__plate-row">
+								<dt class="placard">{row.label}</dt>
+								<dd>{row.value}</dd>
+							</div>
+						))
+					}
+				</dl>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
+	<div class="hero__floor">
+		<div class="container">
+			<a class="hall-guide hero__guide" href={localized_path(lang, '/#projects')}>{t(lang, 'projects.eyebrow')}</a>
+			<ul class="hero__exhibits">
+				{
+					first_exhibits.map((project, index) => (
+						<li>
+							<a class="hero__exhibit-plate placard" href={`#${project.slug}`}>
+								No. {String(index + 1).padStart(2, '0')} · {project.short_name}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</div>
 </section>
 
 <script>
 	import { gsap } from 'gsap';
 
 	const reduced_motion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-	const typed_elements = [...document.querySelectorAll<HTMLElement>('.glance [data-type]')];
-	const idle_prompt = document.querySelector<HTMLElement>('.glance__idle');
-
-	if (typed_elements.length > 0 && !reduced_motion) {
-		// Every line takes the same time to type, so long values (experience, projects) do not stretch the total.
-		const typing_time_per_line_ms = 250;
-		const start_delay_ms = 250;
-		const pause_between_lines_ms = 40;
-		const pending_class = 'is-pending';
-
-		// The unrevealed rest stays in the layout (transparent) so the card never grows while typing.
-		const typed_parts = typed_elements.map((element) => {
-			const full_text = element.textContent ?? '';
-			const revealed = document.createElement('span');
-			const rest = document.createElement('span');
-			rest.className = 'glance__rest';
-			rest.textContent = full_text;
-			element.replaceChildren(revealed, rest);
-			element.closest('.glance__row')?.classList.add(pending_class);
-			return { full_text, revealed, rest, row: element.closest('.glance__row') };
-		});
-		idle_prompt?.classList.add(pending_class);
-
-		const type_next = (index: number) => {
-			if (index >= typed_parts.length) {
-				idle_prompt?.classList.remove(pending_class);
-				return;
-			}
-			const { full_text, revealed, rest, row } = typed_parts[index];
-			row?.classList.remove(pending_class);
-			let typed = 0;
-			const timer = setInterval(() => {
-				typed += 1;
-				revealed.textContent = full_text.slice(0, typed);
-				rest.textContent = full_text.slice(typed);
-				if (typed >= full_text.length) {
-					clearInterval(timer);
-					setTimeout(() => type_next(index + 1), pause_between_lines_ms);
-				}
-			}, typing_time_per_line_ms / full_text.length);
-		};
-		// Typing starts once the card's fade-in actually begins (after its --delay), so it overlaps the fade instead of waiting for it.
-		const hero_visual = document.querySelector<HTMLElement>('.hero__visual');
-		const start_when_card_starts_fading_in = (event: TransitionEvent) => {
-			if (event.target !== hero_visual || event.propertyName !== 'opacity') return;
-			hero_visual?.removeEventListener('transitionstart', start_when_card_starts_fading_in);
-			setTimeout(() => type_next(0), start_delay_ms);
-		};
-		hero_visual?.addEventListener('transitionstart', start_when_card_starts_fading_in);
-	}
 
 	const wallz_button = document.querySelector<HTMLButtonElement>('.hero__wallz');
 	const wallz_status = document.querySelector<HTMLElement>('.hero__wallz-status');
@@ -393,62 +358,78 @@ const cv_path = lang === 'tr' ? '/Mehmet_Guzel_CV.pdf' : '/Mehmet_Guzel_CV_EN.pd
 	}
 </script>
 
+
 <style>
-	.hero {
+	.hero__wall {
 		position: relative;
-		padding-top: clamp(3rem, 8vw, 6rem);
-		padding-bottom: 3rem;
+		background: var(--enamel);
+		color: var(--enamel-text);
+		border-bottom: 14px solid var(--enamel-deep);
 	}
 
 	.hero__grid {
 		display: grid;
-		align-items: center;
-		gap: clamp(2.5rem, 6vw, 5rem);
+		align-items: end;
+		gap: clamp(2.5rem, 6vw, 4rem);
+		padding-block: clamp(1.75rem, 4vw, 2.75rem) clamp(1.75rem, 3.5vw, 2.5rem);
 	}
 
 	@media (min-width: 62rem) {
 		.hero__grid {
-			grid-template-columns: 1.1fr 0.9fr;
+			grid-template-columns: 1.15fr 0.85fr;
 		}
 	}
 
-	.hero__status {
-		display: inline-flex;
+	.hero__name {
+		font-size: clamp(3.6rem, 10vw, 6rem);
+		font-weight: 800;
+		font-stretch: 65%;
+		line-height: 0.94;
+		letter-spacing: -0.01em;
+		text-transform: uppercase;
+	}
+
+	.hero__name span {
+		display: block;
+	}
+
+	.hero__role {
+		margin-top: 1.1rem;
+		color: var(--guide);
+		font-size: clamp(1.25rem, 2.6vw, 1.7rem);
+		font-weight: 700;
+		font-stretch: 85%;
+		line-height: 1.2;
+		text-wrap: balance;
+	}
+
+	.hero__lead {
+		max-width: 46ch;
+		margin-top: 1rem;
+		color: var(--enamel-text);
+		font-size: 1.15rem;
+		line-height: 1.55;
+	}
+
+	.hero__actions {
+		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
-		gap: 0.6rem;
-		margin-bottom: 1.4rem;
-		padding: 0.35rem 0.9rem 0.35rem 0.75rem;
-		border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
-		border-radius: 999px;
-		background: color-mix(in srgb, var(--accent) 10%, transparent);
-		color: var(--text);
-		font: 600 0.82rem var(--font-body);
+		gap: 1.25rem 1.75rem;
+		margin-top: 2rem;
 	}
 
-	.hero__status-dot {
-		position: relative;
-		flex: none;
-		width: 0.5rem;
-		height: 0.5rem;
-		border-radius: 50%;
-		background: #22c55e;
+	.hero .push-button {
+		color: var(--enamel-text);
 	}
 
-	.hero__status-dot::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		border-radius: inherit;
-		background: inherit;
-		animation: status-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+	.hero__projects {
+		border-color: var(--enamel-text);
+		color: var(--enamel-text);
 	}
 
-	@keyframes status-ping {
-		75%,
-		100% {
-			opacity: 0;
-			transform: scale(2.6);
-		}
+	.hero__projects:hover {
+		background: var(--enamel-deep);
 	}
 
 	.hero__social {
@@ -456,102 +437,64 @@ const cv_path = lang === 'tr' ? '/Mehmet_Guzel_CV.pdf' : '/Mehmet_Guzel_CV_EN.pd
 		flex-wrap: wrap;
 		gap: 0.4rem 1.4rem;
 		margin-top: 1.6rem;
-		font: 500 0.85rem var(--font-heading);
+		font-size: 0.95rem;
+		font-weight: 600;
 	}
 
 	.hero__social a {
-		color: var(--muted);
+		color: var(--enamel-muted);
 		text-decoration: none;
 		overflow-wrap: anywhere;
-		transition: color 0.2s ease;
 	}
 
 	.hero__social a:hover {
-		color: var(--accent);
-	}
-
-	.hero__name .gradient-text {
-		display: inline-block;
-		animation:
-			name-in 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both,
-			gradient-shift 8s linear infinite;
-	}
-
-	@keyframes name-in {
-		from {
-			opacity: 0;
-			filter: blur(18px);
-			letter-spacing: 0.1em;
-			transform: translateY(0.6rem);
-		}
-	}
-
-	.hero__name {
-		font-size: clamp(2.8rem, 8.5vw, 6rem);
-		font-weight: 800;
-		letter-spacing: -0.04em;
-		line-height: 1.02;
-	}
-
-
-	.hero__caret {
-		display: inline-block;
-		width: 0.6ch;
-		height: 1.1em;
-		margin-left: 2px;
-		vertical-align: text-bottom;
-		background: var(--accent);
-		animation: blink 1s steps(1) infinite;
-	}
-
-	@keyframes blink {
-		50% {
-			opacity: 0;
-		}
-	}
-
-	.hero__lead {
-		max-width: 48ch;
-		margin-top: 1.1rem;
-		color: var(--muted);
-		font-size: 1.15rem;
-	}
-
-	.hero__actions {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.9rem;
-		margin-top: 2.2rem;
+		color: var(--enamel-text);
+		text-decoration: underline;
 	}
 
 	.hero__visual {
-		--gorilla-width: clamp(9.5rem, 21vw, 13rem);
+		display: grid;
+		gap: 1.25rem;
+	}
+
+	/* A lit alcove in the wall, so the dark-furred exhibit reads against the enamel. */
+	.hero__stage {
+		--wallz-width: clamp(10rem, 22vw, 14rem);
 		position: relative;
-		padding-top: calc(var(--gorilla-width) * 0.88);
+		display: grid;
+		justify-items: center;
+		padding-top: 1.5rem;
+		background: color-mix(in srgb, var(--enamel) 55%, #f2efe4);
+		box-shadow: inset 0 10px 18px -10px rgba(0, 0, 0, 0.45);
 	}
 
 	.hero__wallz {
-		position: absolute;
-		top: 0;
-		right: 8%;
+		position: relative;
 		z-index: 2;
-		width: var(--gorilla-width);
+		width: var(--wallz-width);
+		margin-bottom: -0.6rem;
 		padding: 0;
 		border: 0;
 		background: none;
 		cursor: pointer;
-		filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.35));
+	}
+
+	.hero__plinth {
+		width: calc(var(--wallz-width) * 1.35);
+		height: 3.2rem;
+		background: var(--plinth);
+		box-shadow: 0 16px 18px -10px rgba(0, 0, 0, 0.55);
 	}
 
 	.hero__hint {
 		position: absolute;
-		top: 0.2rem;
-		right: calc(8% + var(--gorilla-width) + 0.5rem);
+		top: 0.75rem;
+		right: 0.75rem;
 		display: none;
-		color: var(--muted);
-		font-family: var(--font-heading);
-		font-size: 0.75rem;
-		white-space: nowrap;
+		max-width: 9rem;
+		color: var(--enamel-text);
+		font-size: 0.8rem;
+		font-style: italic;
 	}
 
 	@media (min-width: 40rem) {
@@ -568,143 +511,85 @@ const cv_path = lang === 'tr' ? '/Mehmet_Guzel_CV.pdf' : '/Mehmet_Guzel_CV_EN.pd
 		clip-path: inset(50%);
 	}
 
-	.terminal {
-		overflow: hidden;
-		transition: transform 0.2s ease-out;
-		background: color-mix(in srgb, var(--bg) 70%, transparent);
-	}
-
-	.terminal__bar {
-		display: flex;
-		align-items: center;
-		gap: 0.45rem;
-		padding: 0.75rem 1rem;
-		border-bottom: 1px solid var(--border);
-	}
-
-	.terminal__bar span {
-		width: 0.7rem;
-		height: 0.7rem;
-		border-radius: 50%;
-		background: #ff5f57;
-	}
-
-	.terminal__bar span:nth-child(2) {
-		background: #febc2e;
-	}
-
-	.terminal__bar span:nth-child(3) {
-		background: #28c840;
-	}
-
-	.terminal__bar b {
-		margin-left: auto;
-		color: var(--muted);
-		font: 500 0.75rem var(--font-heading);
-	}
-
-	.glance {
-		padding: 1.25rem 1.25rem 1.5rem;
-		font: 400 0.88rem/1.6 var(--font-heading);
-	}
-
-	.glance__command {
-		display: flex;
-		align-items: center;
-		font-weight: 700;
-	}
-
-	.glance__row,
-	.glance__idle {
-		transition:
-			opacity 0.45s ease,
-			transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
-	}
-
-	.glance__row.is-pending,
-	.glance__idle.is-pending {
-		opacity: 0;
-		transform: translateY(0.35rem);
-	}
-
-	.glance__rest {
-		color: transparent;
-	}
-
-	.glance__list {
+	/* The exhibit label, cast in brass. */
+	.hero__plate {
 		display: grid;
-		gap: 0.7rem;
-		margin: 1rem 0;
+		gap: 0.55rem;
+		padding: 1.1rem 1.25rem;
+		background: var(--brass);
+		box-shadow: 0 3px 0 color-mix(in srgb, var(--brass) 55%, #000000);
+		color: var(--brass-ink);
 	}
 
-	.glance__row {
+	.hero__plate-list {
+		display: grid;
+		gap: 0.55rem;
+	}
+
+	.hero__plate-title {
+		padding-bottom: 0.5rem;
+		border-bottom: 2px solid var(--brass-ink);
+		font-size: 0.95rem;
+	}
+
+	.hero__plate-row {
 		display: grid;
 		gap: 0.1rem;
 	}
 
 	@media (min-width: 36rem) {
-		.glance__row {
-			grid-template-columns: 10.5rem 1fr;
+		.hero__plate-row {
+			grid-template-columns: 7.5rem 1fr;
 			gap: 1rem;
 		}
 	}
 
-	.glance dt {
-		color: var(--accent-2);
+	.hero__plate dt {
+		font-size: 0.78rem;
+		line-height: 1.6;
 	}
 
-	.glance dt::after {
-		content: ' ›';
-		color: var(--muted);
+	.hero__plate dd {
+		font-size: 0.95rem;
+		font-weight: 600;
+		line-height: 1.4;
 	}
 
-	.glance dd {
-		color: var(--text);
-		overflow-wrap: anywhere;
+	.hero__floor {
+		padding-block: 1.25rem 1.5rem;
+		border-bottom: 1px solid var(--border);
 	}
 
-	.terminal__body {
-		display: grid;
-		gap: 0.55rem;
-		min-height: 15.5rem;
-		padding: 1.25rem 1.25rem 1.5rem;
+	.hero__guide {
+		margin-bottom: 1rem;
+		text-decoration: none;
+	}
+
+	.hero__guide:hover {
+		color: var(--accent);
+	}
+
+	.hero__exhibits {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		padding: 0;
 		list-style: none;
-		font: 400 0.85rem/1.5 var(--font-heading);
 	}
 
-	.terminal__line {
-		overflow-wrap: anywhere;
+	/* Floor plates in front of the first three machines; each opens its exhibit. */
+	.hero__exhibit-plate {
+		display: block;
+		padding: 0.55rem 0.9rem 0.5rem;
+		background: var(--brass);
+		box-shadow: 0 3px 0 color-mix(in srgb, var(--brass) 55%, #000000);
+		color: var(--brass-ink);
+		font-size: 0.9rem;
+		text-decoration: none;
 	}
 
-	.terminal__prompt {
-		margin-right: 0.6rem;
-		color: var(--accent-2);
+	.hero__exhibit-plate:hover {
+		background: var(--brass-light);
 	}
 
-	.terminal__tick {
-		margin-right: 0.6rem;
-		color: var(--accent);
-	}
-
-	.terminal__line--command {
-		color: var(--text);
-		font-weight: 700;
-	}
-
-	.terminal__line--ok {
-		color: var(--muted);
-	}
-
-	.terminal__line--done {
-		color: var(--accent);
-		font-weight: 700;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.hero__caret,
-		.hero__status-dot::after,
-		.hero__name .gradient-text {
-			animation: none;
-		}
-	}
 </style>

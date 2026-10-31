@@ -1,57 +1,70 @@
-@import "@fontsource/inter/400.css";
-@import "@fontsource/inter/500.css";
-@import "@fontsource/inter/600.css";
-@import "@fontsource/inter/800.css";
+@import "@fontsource-variable/archivo/wdth.css";
 @import "@fontsource/jetbrains-mono/400.css";
-@import "@fontsource/jetbrains-mono/500.css";
 @import "@fontsource/jetbrains-mono/700.css";
 
+/* Machine hall: concrete floor, enamel walls, brass plates, one red button. */
 :root {
-  --font-body: "Inter", system-ui, sans-serif;
-  --font-heading: "JetBrains Mono", ui-monospace, monospace;
+  --font-body: "Archivo Variable", "Archivo", system-ui, sans-serif;
+  --font-heading: "Archivo Variable", "Archivo", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --bg: #05070f;
-  --surface: rgba(255, 255, 255, 0.045);
-  --surface-strong: rgba(255, 255, 255, 0.08);
-  --border: rgba(255, 255, 255, 0.1);
-  --text: #e9edf9;
-  --muted: #98a2c3;
-  --accent: #2dd4bf;
-  --accent-2: #818cf8;
-  --accent-3: #f0abfc;
-  --accent-ink: #04201c;
-  --shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.7);
-  --blob-opacity: 0.3;
-  --grid-line: rgba(255, 255, 255, 0.045);
+  --bg: #d9d8d2;
+  --surface: #ecebe6;
+  --surface-strong: #f6f5f1;
+  --border: rgba(21, 22, 20, 0.2);
+  --text: #151614;
+  --muted: #474a44;
+  --accent: #1f4a39;
+  --accent-2: #7d5a1c;
+  --accent-3: #b42c25;
+  --accent-ink: #ffffff;
+  --enamel: #1f4a39;
+  --enamel-deep: #173a2c;
+  --enamel-text: #ece9df;
+  --enamel-muted: #bccabf;
+  --brass: #b8893a;
+  --brass-light: #d6ad62;
+  --brass-ink: #2a1d08;
+  --signal: #c8322b;
+  --signal-deep: #7d1d18;
+  --guide: #e2b52c;
+  --status: #1e8a4a;
+  --plinth: #2a2c29;
+  --shadow: 0 18px 22px -16px rgba(0, 0, 0, 0.38);
+  --grid-line: rgba(21, 22, 20, 0.08);
 
-  --gradient: linear-gradient(110deg, var(--accent), var(--accent-2) 55%, var(--accent-3));
-  --radius: 1.25rem;
-  --container: 72rem;
+  /* The old spectrum is retired; rules and fills now read as the yellow floor guide. */
+  --gradient: linear-gradient(var(--guide), var(--guide));
+  --radius: 0.3rem;
+  --container: 74rem;
 
   /* Kept so older components that read these names stay themed. */
   --color-bg: var(--bg);
   --color-text: var(--text);
   --color-accent: var(--accent);
 
-  color-scheme: dark;
+  color-scheme: light;
 }
 
-:root[data-theme="light"] {
-  --bg: #f6f3ea;
-  --surface: rgba(255, 255, 255, 0.65);
-  --surface-strong: rgba(255, 255, 255, 0.9);
-  --border: rgba(17, 26, 69, 0.12);
-  --text: #111a45;
-  --muted: #566089;
-  --accent: #0e8a96;
-  --accent-2: #5b5bd6;
-  --accent-3: #c026d3;
+/* After hours: the hall with the overhead lights dimmed. */
+:root[data-theme="dark"] {
+  --bg: #121412;
+  --surface: #1b1e1b;
+  --surface-strong: #242824;
+  --border: rgba(236, 233, 223, 0.16);
+  --text: #ece9df;
+  --muted: #a9ada3;
+  --accent: #8cc7a6;
+  --accent-2: #d6ad62;
+  --accent-3: #ee6a57;
   --accent-ink: #ffffff;
-  --shadow: 0 24px 50px -28px rgba(17, 26, 69, 0.35);
-  --blob-opacity: 0.2;
-  --grid-line: rgba(17, 26, 69, 0.06);
+  --enamel: #183a2d;
+  --enamel-deep: #112a21;
+  --plinth: #0b0c0b;
+  --shadow: 0 18px 22px -16px rgba(0, 0, 0, 0.75);
+  --grid-line: rgba(236, 233, 223, 0.06);
 
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 *,
@@ -67,6 +80,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
+  scrollbar-color: color-mix(in srgb, var(--muted) 55%, transparent) var(--bg);
   -webkit-text-size-adjust: 100%;
 }
 
@@ -77,34 +91,42 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.65;
+  font-size: 1.0625rem;
+  line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--accent) 40%, transparent);
+  background: var(--guide);
+  color: #151614;
 }
 
 a {
   color: var(--accent);
+  text-underline-offset: 0.2em;
 }
 
 a:focus-visible,
 button:focus-visible,
 summary:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 3px solid var(--guide);
   outline-offset: 3px;
-  border-radius: 0.5rem;
+  border-radius: 0.2rem;
 }
 
 h1,
 h2,
 h3,
 h4 {
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--font-mono);
 }
 
 .skip-link {
@@ -113,8 +135,8 @@ h4 {
   left: 0;
   z-index: 100;
   padding: 0.5rem 1rem;
-  background: var(--bg);
-  color: var(--text);
+  background: var(--guide);
+  color: #151614;
   transform: translateY(-100%);
 }
 
@@ -141,82 +163,68 @@ h4 {
   padding-block: clamp(3.5rem, 8vw, 6rem);
 }
 
-.eyebrow {
-  display: inline-flex;
+/* Floor guide: the yellow line that walks the visitor into each hall, carrying the hall's literal name. */
+.hall-guide {
+  display: flex;
   align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 1rem;
-  color: var(--accent);
+  gap: 1rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  color: var(--text);
   font-family: var(--font-heading);
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-size: 1rem;
+  font-weight: 700;
+  font-stretch: 75%;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
-.eyebrow::before {
+.hall-guide::before {
   content: "";
-  width: 2rem;
-  height: 1px;
-  background: var(--gradient);
+  flex: none;
+  width: clamp(3rem, 12vw, 9rem);
+  height: 10px;
+  background: var(--guide);
+}
+
+/* The doorway between two bands: the floor guide marks where one hall ends and the next begins. */
+.section--threshold {
+  padding-top: 0;
+}
+
+.hall-threshold {
+  margin-bottom: clamp(3rem, 7vw, 5rem);
+  padding-block: 1.1rem;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.hall-threshold .hall-guide {
+  margin-bottom: 0;
 }
 
 .section__title {
-  max-width: 22ch;
-  font-size: clamp(2rem, 5vw, 3.4rem);
+  max-width: 20ch;
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
   font-weight: 800;
+  font-stretch: 72%;
+  line-height: 0.95;
+  text-transform: uppercase;
+  text-wrap: balance;
 }
 
 .section__lead {
-  max-width: 52ch;
-  margin-top: 1rem;
+  max-width: 56ch;
+  margin-top: 1.1rem;
   color: var(--muted);
-  font-size: 1.1rem;
+  font-size: 1.15rem;
 }
 
-.gradient-text {
-  background: var(--gradient);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: gradient-shift 8s linear infinite;
-}
-
-@keyframes gradient-shift {
-  to {
-    background-position: 200% center;
-  }
-}
-
-/* Glass surface with a cursor-following spotlight (--mx/--my set by the pointer script). */
+/* Exhibit panel: solid stock, hairline edge, hard shadow from the hall lights. */
 .glass {
   position: relative;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   box-shadow: var(--shadow);
-}
-
-.spot::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    28rem circle at var(--mx, 50%) var(--my, 0%),
-    color-mix(in srgb, var(--accent) 16%, transparent),
-    transparent 60%
-  );
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  pointer-events: none;
-}
-
-.spot:hover::after {
-  opacity: 1;
 }
 
 .btn {
@@ -224,67 +232,121 @@ h4 {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  padding: 0.8rem 1.4rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--surface);
+  padding: 0.8rem 1.3rem 0.75rem;
+  border: 2px solid var(--text);
+  border-radius: var(--radius);
+  background: transparent;
   color: var(--text);
-  font: 600 0.95rem var(--font-body);
+  font: 700 0.95rem var(--font-body);
+  font-stretch: 85%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
   transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease,
-    background 0.25s ease;
+    transform 0.08s ease-out,
+    box-shadow 0.08s ease-out,
+    background 0.15s ease;
 }
 
 .btn:hover {
-  transform: translateY(-2px);
-  border-color: var(--accent);
-  box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--accent) 60%, transparent);
+  background: var(--surface-strong);
 }
 
+/* The red push button: short mechanical travel, shadow collapses on press. */
 .btn--primary {
-  border-color: transparent;
-  background: var(--gradient);
-  color: var(--accent-ink);
+  border-color: var(--signal-deep);
+  background: var(--signal);
+  color: #ffffff;
+  box-shadow: 0 4px 0 var(--signal-deep);
 }
 
 .btn--primary:hover {
-  border-color: transparent;
-  box-shadow: 0 14px 40px -10px color-mix(in srgb, var(--accent-2) 70%, transparent);
+  background: color-mix(in srgb, var(--signal) 88%, #ffffff);
+}
+
+.btn--primary:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--signal-deep);
 }
 
 .chip {
   display: inline-block;
-  padding: 0.25rem 0.75rem;
+  padding: 0.2rem 0.6rem;
   border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--surface);
-  font-family: var(--font-heading);
-  font-size: 0.78rem;
+  border-radius: 0.2rem;
+  background: var(--surface-strong);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
   line-height: 1.5;
   white-space: nowrap;
-  transition:
-    border-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
 }
 
-.chip:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  transform: translateY(-1px);
+/* The signature control: a real push button whose cap travels down when pressed. */
+.push-button {
+  --cap-size: 4.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  color: inherit;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 800;
+  font-stretch: 78%;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.push-button__cap {
+  flex: none;
+  width: var(--cap-size);
+  height: var(--cap-size);
+  border: calc(var(--cap-size) * 0.06) solid #151614;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 calc(var(--cap-size) * 0.11) 0 var(--signal-deep);
+  transition:
+    transform 0.07s ease-out,
+    box-shadow 0.07s ease-out;
+}
+
+.push-button:hover .push-button__cap {
+  background: color-mix(in srgb, var(--signal) 88%, #ffffff);
+}
+
+.push-button:active .push-button__cap,
+.push-button.is-pressed .push-button__cap {
+  transform: translateY(calc(var(--cap-size) * 0.08));
+  box-shadow: 0 calc(var(--cap-size) * 0.03) 0 var(--signal-deep);
+}
+
+.push-button__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-bottom: 0.1rem;
+  border-bottom: 3px solid var(--guide);
+}
+
+/* Exhibit number and name in one breath: "No. 03 · STOP". */
+.placard {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-stretch: 75%;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 /* Scroll reveal: only hidden once JS has marked the page, so the content is never lost without it. */
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(1.75rem);
+  transform: translateY(1.25rem);
   transition:
-    opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
-    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+    opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
   transition-delay: var(--delay, 0ms);
 }
 
@@ -304,7 +366,11 @@ h4 {
     transition: none;
   }
 
-  .gradient-text {
-    animation: none;
+  .btn,
+  .btn--primary:active,
+  .push-button__cap,
+  .push-button:active .push-button__cap {
+    transition: none;
+    transform: none;
   }
 }

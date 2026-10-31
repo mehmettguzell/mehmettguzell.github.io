@@ -11,7 +11,7 @@ const { label, skills, index, learning_label } = Astro.props;
 
 <article class:list={['skill-group glass spot', { 'skill-group--learning': learning_label }]} data-reveal style={`--delay: ${(index % 4) * 70}ms`}>
 	<h3 class="skill-group__label">
-		<span class="skill-group__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{label}
+		{label}
 		{learning_label && <span class="skill-group__badge">{learning_label}</span>}
 	</h3>
 	<ul class="skill-group__skills">
@@ -33,18 +33,13 @@ const { label, skills, index, learning_label } = Astro.props;
 		font-size: 1.1rem;
 	}
 
-	.skill-group__number {
-		color: var(--accent);
-		font: 500 0.75rem var(--font-heading);
-	}
-
 	.skill-group__badge {
 		padding: 0.1rem 0.55rem;
-		border-radius: 999px;
+		border-radius: var(--radius);
 		background: color-mix(in srgb, var(--accent-2) 18%, transparent);
 		color: var(--accent-2);
-		font: 700 0.62rem var(--font-heading);
-		letter-spacing: 0.08em;
+		font: 700 0.72rem var(--font-heading);
+		letter-spacing: 0.06em;
 		text-transform: uppercase;
 	}
 

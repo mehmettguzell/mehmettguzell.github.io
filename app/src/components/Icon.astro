@@ -1,0 +1,31 @@
+---
+// Stroke icons drawn on the same 16px grid and 1.6 stroke as the dialog tab icons.
+const icon_paths = {
+	'arrow-right': 'M3 8h10M9 4l4 4-4 4',
+	'arrow-left': 'M13 8H3M7 4L3 8l4 4',
+	'arrow-up': 'M8 13V3M4 7l4-4 4 4',
+	download: 'M8 2.5v8M4.5 7L8 10.5 11.5 7M3 13.5h10',
+	external: 'M6 3.5H3.5v9h9V10M9 3h4v4M13 3L7.5 8.5',
+	close: 'M4 4l8 8M12 4l-8 8',
+} as const;
+
+interface Props {
+	name: keyof typeof icon_paths;
+	class?: string;
+}
+
+const { name, class: class_name } = Astro.props;
+---
+
+<svg class:list={['icon', class_name]} viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" aria-hidden="true">
+	<path d={icon_paths[name]} />
+</svg>
+
+<style>
+	.icon {
+		flex: none;
+		width: 1em;
+		height: 1em;
+		vertical-align: -0.125em;
+	}
+</style>

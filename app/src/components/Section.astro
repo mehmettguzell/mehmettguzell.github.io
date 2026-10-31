@@ -1,18 +1,20 @@
 ---
 interface Props {
 	id: string;
-	eyebrow: string;
+	hall: string;
 	title: string;
 	lead?: string;
+	/** Off when the floor guide into this hall is already drawn just above it. */
+	show_hall_guide?: boolean;
 }
 
-const { id, eyebrow, title, lead } = Astro.props;
+const { id, hall, title, lead, show_hall_guide = true } = Astro.props;
 ---
 
-<section class="section" id={id} aria-labelledby={`${id}-title`}>
+<section class:list={['section', { 'section--threshold': show_hall_guide }]} id={id} aria-labelledby={`${id}-title`}>
+	{show_hall_guide && <p class="hall-threshold"><span class="container hall-guide">{hall}</span></p>}
 	<div class="container">
 		<header class="section__header" data-reveal>
-			<p class="eyebrow">{eyebrow}</p>
 			<h2 class="section__title" id={`${id}-title`}>{title}</h2>
 			{lead && <p class="section__lead">{lead}</p>}
 		</header>

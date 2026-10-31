@@ -6,7 +6,9 @@ import ExperienceItem from '../../components/ExperienceItem.astro';
 import SkillGroup from '../../components/SkillGroup.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import ProjectTile from '../../components/ProjectTile.astro';
-import { languages, t, default_language, type Language } from '../../i18n';
+import Icon from '../../components/Icon.astro';
+import { languages, t, default_language, localized_path, type Language } from '../../i18n';
+import { estimate_reading_minutes, get_blog_feed_newest_first } from '../../lib/blog';
 import experience from '../../data/experience.json';
 import projects from '../../data/projects.json';
 import skills from '../../data/skills.json';
@@ -18,6 +20,9 @@ export function getStaticPaths() {
 }
 
 const lang = (Astro.params.lang ?? default_language) as Language;
+const latest_writing_count = 2;
+const latest_writing = (await get_blog_feed_newest_first()).slice(0, latest_writing_count);
+const date_format = new Intl.DateTimeFormat(lang, { dateStyle: 'medium' });
 
 const education_icons = {
 	degree: 'M1 6l7-3.5L15 6l-7 3.5zM4 7.5V11c0 1 1.8 2 4 2s4-1 4-2V7.5',
@@ -34,30 +39,7 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 <Layout lang={lang} title={t(lang, 'home.title')} description={t(lang, 'meta.home_description')}>
 	<Hero lang={lang} />
 
-	<Section id="experience" eyebrow={t(lang, 'experience.eyebrow')} title={t(lang, 'experience.heading')}>
-		<div class="timeline">
-			<span class="timeline__rail" aria-hidden="true"><span class="timeline__fill"></span></span>
-			{
-				experience.map((item) => (
-					<ExperienceItem
-						role={item.role[lang]}
-						summary={item.summary[lang]}
-						organization={item.organization}
-						location={item.location[lang]}
-						period={item.period[lang]}
-						highlights={item.highlights.map((highlight) => highlight[lang])}
-						gained={'gained' in item ? item.gained[lang] : undefined}
-							gained_label={t(lang, 'experience.gained')}
-							technologies={item.technologies}
-						technologies_label={t(lang, 'experience.stack')}
-						proof={'proof' in item ? { ...item.proof, title: t(lang, 'experience.proof') } : undefined}
-					/>
-				))
-			}
-		</div>
-	</Section>
-
-	<Section id="projects" eyebrow={t(lang, 'projects.eyebrow')} title={t(lang, 'projects.heading')} lead={t(lang, 'projects.lead')}>
+	<Section id="projects" hall={t(lang, 'projects.eyebrow')} show_hall_guide={false} title={t(lang, 'projects.heading')} lead={t(lang, 'projects.lead')}>
 		<div class="project-grid">
 			{
 				projects.map((project, index) => (
@@ -65,11 +47,15 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 						slug={project.slug}
 						index={index}
 						name={project.name}
+						short_name={project.short_name}
 						tagline={project.tagline[lang]}
 						architecture_styles={project.architecture_style.map((style) => style[lang])}
 						context={'context' in project ? project.context[lang] : undefined}
 						technologies={project.technologies}
 						status_label={'in_progress' in project && project.in_progress ? t(lang, 'projects.in_progress') : undefined}
+						repository={'repository' in project ? project.repository : undefined}
+						repository_label={t(lang, 'projects.repository')}
+						pipeline_label={'pipeline' in project ? t(lang, 'projects.tab_pipeline') : undefined}
 						open_label={t(lang, 'projects.open_details')}
 						close_label={t(lang, 'projects.close_details')}
 					>
@@ -77,6 +63,7 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 						slug={project.slug}
 						index={index}
 						name={project.name}
+						short_name={project.short_name}
 						context={'context' in project ? project.context[lang] : undefined}
 						release_status={
 							'release_status' in project
@@ -119,12 +106,34 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 		</div>
 	</Section>
 
-	<Section id="about" eyebrow={t(lang, 'about.eyebrow')} title={t(lang, 'about.heading')}>
+	<Section id="experience" hall={t(lang, 'experience.eyebrow')} title={t(lang, 'experience.heading')}>
+		<div class="timeline">
+			<span class="timeline__rail" aria-hidden="true"><span class="timeline__fill"></span></span>
+			{
+				experience.map((item) => (
+					<ExperienceItem
+						role={item.role[lang]}
+						summary={item.summary[lang]}
+						organization={item.organization}
+						location={item.location[lang]}
+						period={item.period[lang]}
+						highlights={item.highlights.map((highlight) => highlight[lang])}
+						gained={'gained' in item ? item.gained[lang] : undefined}
+							gained_label={t(lang, 'experience.gained')}
+							technologies={item.technologies}
+						technologies_label={t(lang, 'experience.stack')}
+						proof={'proof' in item ? { ...item.proof, title: t(lang, 'experience.proof') } : undefined}
+					/>
+				))
+			}
+		</div>
+	</Section>
+
+	<Section id="about" hall={t(lang, 'about.eyebrow')} title={t(lang, 'about.heading')}>
 		<div class="pillars">
 			{
 				pillars.map((pillar, index) => (
-					<article class="pillar glass spot" data-reveal style={`--delay: ${index * 70}ms`}>
-						<span class="pillar__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+					<article class="pillar" data-reveal style={`--delay: ${index * 70}ms`}>
 						<h3>{pillar.title}</h3>
 						<p>{pillar.body}</p>
 					</article>
@@ -133,7 +142,7 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 		</div>
 	</Section>
 
-	<Section id="skills" eyebrow={t(lang, 'skills.eyebrow')} title={t(lang, 'skills.heading')}>
+	<Section id="skills" hall={t(lang, 'skills.eyebrow')} title={t(lang, 'skills.heading')}>
 		<div class="skill-grid">
 			{
 				skills.map((group, index) => (
@@ -148,11 +157,11 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 		</div>
 	</Section>
 
-	<Section id="education" eyebrow={t(lang, 'education.eyebrow')} title={t(lang, 'education.heading')}>
+	<Section id="education" hall={t(lang, 'education.eyebrow')} title={t(lang, 'education.heading')}>
 		<div class="education-grid">
 			{
 				education.degrees.map((degree) => (
-					<article class="glass spot education-card education-card--degree" data-reveal>
+					<article class="education-card education-card--degree" data-reveal>
 						<header class="education-card__head">
 							<span class="education-card__icon" aria-hidden="true">
 								<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
@@ -172,7 +181,7 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 			}
 			{
 				education.achievements.map((achievement, index) => (
-					<article class="glass spot education-card" data-reveal style={`--delay: ${(index + 1) * 90}ms`}>
+					<article class="education-card" data-reveal style={`--delay: ${(index + 1) * 90}ms`}>
 						<header class="education-card__head">
 							<span class="education-card__icon" aria-hidden="true">
 								<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
@@ -194,23 +203,64 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 		</div>
 	</Section>
 
-	<section class="section contact" id="contact" aria-labelledby="contact-title">
+	{
+		latest_writing.length > 0 && (
+			<Section id="writing" hall={t(lang, 'blog.eyebrow')} title={t(lang, 'blog.heading')} lead={t(lang, 'blog.lead')}>
+				<ul class="writing-list">
+					{latest_writing.map((item) => (
+						<li class="writing-item glass spot" data-reveal>
+							{item.kind === 'series' ? (
+								<>
+									<p class="writing-item__meta">
+										{t(lang, 'blog.series').toLocaleUpperCase(lang)} · {item.posts.length}/{item.series.data.total_posts} {t(lang, 'blog.series_written')}
+									</p>
+									<h3>
+										<a href={localized_path(lang, `/blog/seri/${item.series.id}/`)}>{item.series.data.title}</a>
+									</h3>
+									<p lang={item.series.data.lang}>{item.series.data.summary}</p>
+								</>
+							) : (
+								<>
+									<p class="writing-item__meta">
+										<time datetime={item.post.data.date.toISOString()}>{date_format.format(item.post.data.date)}</time> ·{' '}
+										{estimate_reading_minutes(item.post)} {t(lang, 'blog.reading_minutes')}
+									</p>
+									<h3>
+										<a href={localized_path(lang, `/blog/${item.post.id}/`)} hreflang={item.post.data.lang}>
+											{item.post.data.title}
+										</a>
+									</h3>
+									<p lang={item.post.data.lang}>{item.post.data.summary}</p>
+								</>
+							)}
+						</li>
+					))}
+				</ul>
+				<a class="btn writing-all" href={localized_path(lang, '/blog/')}>
+					{t(lang, 'blog.all')} <Icon name="arrow-right" />
+				</a>
+			</Section>
+		)
+	}
+
+	<section class="section section--threshold contact" id="contact" aria-labelledby="contact-title">
+		<p class="hall-threshold"><span class="container hall-guide">{t(lang, 'contact.eyebrow')}</span></p>
 		<div class="container">
-			<div class="contact__card glass" data-reveal>
-					<img class="contact__photo" src="/mehmet-guzel.webp" alt="Mehmet Güzel" width="128" height="128" loading="lazy" />
-				<p class="eyebrow">{t(lang, 'contact.eyebrow')}</p>
+			<div class="contact__card" data-reveal>
+				<img class="contact__photo" src="/mehmet-guzel.webp" alt="Mehmet Güzel" width="128" height="128" loading="lazy" />
 				<h2 class="contact__title" id="contact-title">{t(lang, 'contact.heading')}</h2>
 				<p class="contact__lead">{t(lang, 'contact.lead')}</p>
 				<p class="contact__email">
 					<a href={`mailto:${contact.email}`}>{contact.email}</a>
 				</p>
 				<div class="contact__actions">
-					<button type="button" class="btn btn--primary" data-copy={contact.email} data-copied={t(lang, 'contact.copied')}>
-						{t(lang, 'contact.copy')}
+					<button type="button" class="push-button contact__copy" data-copy={contact.email} data-copied={t(lang, 'contact.copied')}>
+						<span class="push-button__cap" aria-hidden="true"></span>
+						<span class="push-button__label" aria-live="polite">{t(lang, 'contact.copy')}</span>
 					</button>
-					<a class="btn" href={contact.linkedin} rel="noopener" target="_blank">LinkedIn ↗</a>
-					<a class="btn" href={contact.github} rel="noopener" target="_blank">GitHub ↗</a>
-					<a class="btn" href={lang === 'tr' ? '/Mehmet_Guzel_CV.pdf' : '/Mehmet_Guzel_CV_EN.pdf'} download>{t(lang, 'nav.cv_download')} ↓</a>
+					<a class="btn" href={contact.linkedin} rel="noopener" target="_blank">LinkedIn <Icon name="external" /></a>
+					<a class="btn" href={contact.github} rel="noopener" target="_blank">GitHub <Icon name="external" /></a>
+					<a class="btn" href={lang === 'tr' ? '/Mehmet_Guzel_CV.pdf' : '/Mehmet_Guzel_CV_EN.pdf'} download>{t(lang, 'nav.cv_download')} <Icon name="download" /></a>
 				</div>
 			</div>
 		</div>
@@ -229,12 +279,15 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 	update_timeline();
 
 	const copy_button = document.querySelector<HTMLButtonElement>('[data-copy]');
+	const copy_label = copy_button?.querySelector<HTMLElement>('.push-button__label');
 	copy_button?.addEventListener('click', async () => {
-		const original_label = copy_button.textContent;
+		const original_label = copy_label?.textContent ?? '';
 		try {
 			await navigator.clipboard.writeText(copy_button.dataset.copy ?? '');
-			copy_button.textContent = copy_button.dataset.copied ?? '';
-			setTimeout(() => (copy_button.textContent = original_label), 1800);
+			if (copy_label) copy_label.textContent = copy_button.dataset.copied ?? '';
+			setTimeout(() => {
+				if (copy_label) copy_label.textContent = original_label;
+			}, 1800);
 		} catch {
 			location.href = `mailto:${copy_button.dataset.copy}`;
 		}
@@ -242,13 +295,23 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 </script>
 
 <style>
+	/* Hall 03 is an enamel wall too: each claim is a plate mounted on it. */
+	:global(#about) {
+		background: var(--enamel);
+		color: var(--enamel-text);
+	}
+
+	:global(#about .hall-guide) {
+		color: var(--enamel-text);
+	}
+
 	.pillars {
 		display: grid;
 		gap: 1.1rem;
 		grid-template-columns: 1fr;
 	}
 
-	/* Five cards: the two most important span half the row each, the other three share the row below. */
+	/* The two most important claims span half the row each, the other three share the row below. */
 	@media (min-width: 48rem) {
 		.pillars {
 			grid-template-columns: repeat(6, 1fr);
@@ -263,12 +326,7 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 		}
 
 		.pillar:nth-child(-n + 2) h3 {
-			font-size: 1.45rem;
-		}
-
-		.pillar:nth-child(-n + 2) .pillar__number {
 			font-size: 1.6rem;
-			font-weight: 800;
 		}
 	}
 
@@ -276,48 +334,24 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 		display: flex;
 		flex-direction: column;
 		gap: 0.75rem;
-		padding: 1.75rem;
-	}
-
-	.pillar:hover {
-		border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
-	}
-
-	/* A gradient line on the two lead cards marks them as the strongest points. */
-	.pillar:nth-child(-n + 2)::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 1.75rem;
-		right: 1.75rem;
-		height: 2px;
-		border-radius: 0 0 2px 2px;
-		background: var(--gradient);
-	}
-
-	.pillar__number {
-		color: var(--accent);
-		font: 500 0.8rem var(--font-heading);
-		line-height: 1;
-	}
-
-	.pillar:nth-child(-n + 2) .pillar__number {
-		background: var(--gradient);
-		-webkit-background-clip: text;
-		background-clip: text;
-		color: transparent;
+		padding: 1.6rem 1.6rem 1.75rem;
+		border-top: 6px solid var(--brass);
+		background: var(--enamel-deep);
 	}
 
 	.pillar h3 {
-		font-size: 1.25rem;
-		line-height: 1.3;
+		color: var(--enamel-text);
+		font-size: 1.3rem;
+		font-weight: 800;
+		font-stretch: 82%;
+		line-height: 1.2;
 		text-wrap: balance;
 	}
 
 	.pillar p {
-		color: var(--muted);
-		font-size: 0.96rem;
-		line-height: 1.7;
+		color: var(--enamel-muted);
+		font-size: 1rem;
+		line-height: 1.65;
 	}
 
 	.bento__label {
@@ -346,8 +380,8 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 		position: absolute;
 		top: 0;
 		bottom: 0;
-		left: 0.3rem;
-		width: 2px;
+		left: 0.2rem;
+		width: 4px;
 		background: var(--border);
 	}
 
@@ -357,6 +391,20 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 		background: var(--gradient);
 		transform: scaleY(var(--fill, 0));
 		transform-origin: top;
+	}
+
+	/* Hall 01 is an enamel wall: the working machines stand against it. */
+	:global(#projects) {
+		background: var(--enamel);
+		color: var(--enamel-text);
+	}
+
+	:global(#projects .section__lead) {
+		color: var(--enamel-muted);
+	}
+
+	:global(#projects .tile-wrap) {
+		color: var(--text);
 	}
 
 	.project-grid {
@@ -369,6 +417,52 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 		display: grid;
 		gap: 1.1rem;
 		grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+	}
+
+	.writing-list {
+		display: grid;
+		gap: 1.1rem;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+		padding: 0;
+		list-style: none;
+	}
+
+	.writing-item {
+		position: relative;
+		padding: 1.5rem;
+		color: var(--muted);
+	}
+
+	.writing-item__meta {
+		margin-bottom: 0.5rem;
+		font: 500 0.78rem var(--font-heading);
+	}
+
+	.writing-item h3 {
+		margin-bottom: 0.4rem;
+		font-size: 1.3rem;
+		line-height: 1.3;
+		text-wrap: balance;
+	}
+
+	.writing-item h3 a {
+		color: var(--text);
+		text-decoration: none;
+	}
+
+	/* The title link covers the card so the whole card opens the post. */
+	.writing-item h3 a::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+	}
+
+	.writing-item:hover h3 a {
+		color: var(--accent);
+	}
+
+	.writing-all {
+		margin-top: 1.5rem;
 	}
 
 	.education-grid {
@@ -386,35 +480,25 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 		}
 	}
 
+	/* Education reads as a ruled floor list, not a set of cards. */
 	.education-card {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
 		gap: 0.8rem;
-		padding: 1.75rem;
+		padding: 1.4rem 0 0.5rem;
+		border-top: 4px solid var(--text);
 		color: var(--muted);
-	}
-
-	.education-card--degree {
-		border-color: color-mix(in srgb, var(--accent) 35%, transparent);
-		background-image: linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, transparent), transparent 55%);
 	}
 
 	.education-card__head {
 		display: flex;
 		align-items: center;
-		gap: 0.75rem;
+		gap: 0.6rem;
 	}
 
 	.education-card__icon {
-		display: grid;
-		flex: none;
-		place-items: center;
-		width: 2.5rem;
-		height: 2.5rem;
-		border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
-		border-radius: 0.7rem;
-		background: color-mix(in srgb, var(--accent) 12%, transparent);
+		display: inline-flex;
 		color: var(--accent);
 	}
 
@@ -441,79 +525,104 @@ const pillars = [1, 2, 3, 4, 5].map((number) => ({
 	.education-card__meta li {
 		padding: 0.25rem 0.75rem;
 		border: 1px solid var(--border);
-		border-radius: 999px;
+		border-radius: var(--radius);
 		background: var(--surface);
 		color: var(--text);
 		font: 400 0.78rem/1.5 var(--font-heading);
 	}
 
+	/* The exit desk: the last enamel wall before the street. */
+	.contact {
+		background: var(--enamel);
+		color: var(--enamel-text);
+	}
+
 	.contact__card {
-		position: relative;
-		overflow: hidden;
-		padding: clamp(2rem, 6vw, 4.5rem);
-		text-align: center;
+		display: grid;
+		gap: 0 2.5rem;
+		grid-template-columns: 1fr;
 	}
 
-	.contact__card::before {
-		content: '';
-		position: absolute;
-		inset: -40% -10% auto;
-		height: 24rem;
-		background: radial-gradient(ellipse at center, color-mix(in srgb, var(--accent-2) 30%, transparent), transparent 65%);
-		pointer-events: none;
-	}
+	@media (min-width: 48rem) {
+		.contact__card {
+			grid-template-columns: auto 1fr;
+		}
 
-	.contact__card > * {
-		position: relative;
+		.contact__photo {
+			grid-row: span 6;
+		}
 	}
 
 	.contact__photo {
-		display: block;
 		width: 8rem;
 		height: 8rem;
-		margin: 0 auto 1.5rem;
-		border: 2px solid var(--border);
-		border-radius: 50%;
+		margin-bottom: 1.5rem;
+		border: 6px solid var(--brass);
 		object-fit: cover;
-	}
-
-	.contact__card .eyebrow {
-		justify-content: center;
+		box-shadow: 0 3px 0 color-mix(in srgb, var(--brass) 55%, #000000);
 	}
 
 	.contact__title {
-		font-size: clamp(2rem, 5vw, 3.4rem);
+		max-width: 18ch;
+		font-size: clamp(2.4rem, 6vw, 4.2rem);
 		font-weight: 800;
+		font-stretch: 72%;
+		line-height: 0.95;
+		text-transform: uppercase;
 	}
 
 	.contact__lead {
-		max-width: 46ch;
-		margin: 1rem auto 0;
-		color: var(--muted);
-		font-size: 1.1rem;
+		max-width: 50ch;
+		margin-top: 1rem;
+		color: var(--enamel-muted);
+		font-size: 1.15rem;
 	}
 
 	.contact__email {
-		margin-top: 1.75rem;
-		font-family: var(--font-heading);
-		font-size: clamp(1.1rem, 3.4vw, 2rem);
-		font-weight: 700;
+		margin-top: 1.5rem;
+		font-size: clamp(1.4rem, 4.4vw, 2.6rem);
+		font-weight: 800;
+		font-stretch: 78%;
 		overflow-wrap: anywhere;
 	}
 
 	.contact__email a {
-		background: var(--gradient);
-		-webkit-background-clip: text;
-		background-clip: text;
-		color: transparent;
+		color: var(--guide);
 		text-decoration: none;
+	}
+
+	.contact__email a:hover {
+		text-decoration: underline;
+		text-decoration-thickness: 3px;
 	}
 
 	.contact__actions {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0.8rem;
-		margin-top: 2rem;
+		align-items: center;
+		gap: 1rem 0.8rem;
+		margin-top: 1.75rem;
+	}
+
+	.contact .hall-guide {
+		color: var(--enamel-text);
+	}
+
+	.contact__copy {
+		padding: 0;
+		border: 0;
+		background: none;
+		color: var(--enamel-text);
+		cursor: pointer;
+		--cap-size: 3rem;
+	}
+
+	.contact__actions .btn:not(.btn--primary) {
+		border-color: var(--enamel-text);
+		color: var(--enamel-text);
+	}
+
+	.contact__actions .btn:not(.btn--primary):hover {
+		background: var(--enamel-deep);
 	}
 </style>

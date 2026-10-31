@@ -1,18 +1,25 @@
 ---
+import Icon from './Icon.astro';
+
 interface Props {
 	slug: string;
 	index: number;
 	name: string;
+	short_name: string;
 	tagline: string;
 	architecture_styles: string[];
 	context?: string;
 	technologies: string[];
 	status_label?: string;
+	repository?: string;
+	repository_label: string;
+	pipeline_label?: string;
 	open_label: string;
 	close_label: string;
 }
 
-const { slug, index, name, tagline, architecture_styles, context, technologies, status_label, open_label, close_label } = Astro.props;
+const { slug, index, name, short_name, tagline, architecture_styles, context, technologies, status_label, repository, repository_label, pipeline_label, open_label, close_label } =
+	Astro.props;
 
 const visible_technology_count = 4;
 const visible_technologies = technologies.slice(0, visible_technology_count);
@@ -21,11 +28,7 @@ const hidden_technology_count = technologies.length - visible_technologies.lengt
 
 <div class="tile-wrap" data-reveal>
 	<article class:list={['tile glass spot', { 'tile--in-progress': status_label }]}>
-		<div class="tile__bar" aria-hidden="true">
-			<span></span><span></span><span></span>
-			<code>~/projects/{slug}</code>
-			<b>{String(index + 1).padStart(2, '0')}</b>
-		</div>
+		<p class="tile__bar placard" aria-hidden="true">No. {String(index + 1).padStart(2, '0')} · {short_name}</p>
 		<div class="tile__body">
 			<ul class="tile__badges">
 				{status_label && <li class="tile__badge tile__badge--status">{status_label}</li>}
@@ -42,12 +45,27 @@ const hidden_technology_count = technologies.length - visible_technologies.lengt
 				{visible_technologies.map((technology) => <li class="chip">{technology}</li>)}
 				{hidden_technology_count > 0 && <li class="chip">+{hidden_technology_count}</li>}
 			</ul>
-			<span class="tile__cta" aria-hidden="true">{open_label} <span>→</span></span>
+			<div class="tile__footer">
+				<span class="push-button tile__push" aria-hidden="true">
+					<span class="push-button__cap"></span>
+					<span class="push-button__label">{open_label}</span>
+				</span>
+				<span class="tile__proofs">
+					{pipeline_label && <span class="tile__proof">{pipeline_label}</span>}
+					{
+						repository && (
+							<a class="tile__source" href={repository} rel="noopener" target="_blank">
+								{repository_label} <Icon name="external" />
+							</a>
+						)
+					}
+				</span>
+			</div>
 		</div>
 	</article>
 
-	<dialog id={`${slug}-dialog`} class="project-dialog" aria-label={name}>
-		<button type="button" class="project-dialog__close" data-close-project aria-label={close_label}>×</button>
+	<dialog id={`${slug}-dialog`} class="project-dialog" aria-label={name} data-project-slug={slug}>
+		<button type="button" class="project-dialog__close" data-close-project aria-label={close_label}><Icon name="close" /></button>
 		<slot />
 	</dialog>
 </div>
@@ -58,57 +76,24 @@ const hidden_technology_count = technologies.length - visible_technologies.lengt
 		flex-direction: column;
 		height: 100%;
 		overflow: clip;
+		border-top: 6px solid var(--enamel);
 		transition:
-			border-color 0.3s ease,
-			box-shadow 0.3s ease,
-			transform 0.3s ease;
+			box-shadow 0.15s ease,
+			transform 0.15s ease;
 	}
 
 	.tile:hover,
 	.tile:focus-within {
-		border-color: color-mix(in srgb, var(--accent) 40%, transparent);
-		box-shadow: 0 30px 70px -30px color-mix(in srgb, var(--accent) 35%, transparent);
+		box-shadow: 0 26px 26px -18px rgba(0, 0, 0, 0.45);
 		transform: translateY(-3px);
 	}
 
+	/* The exhibit's brass number plate: number and name in one breath. */
 	.tile__bar {
-		display: flex;
-		align-items: center;
-		gap: 0.4rem;
-		padding: 0.65rem 1rem;
-		border-bottom: 1px solid var(--border);
-		background: var(--surface);
-	}
-
-	.tile__bar span {
-		flex: none;
-		width: 0.6rem;
-		height: 0.6rem;
-		border-radius: 50%;
-		background: #ff5f57;
-	}
-
-	.tile__bar span:nth-child(2) {
-		background: #febc2e;
-	}
-
-	.tile__bar span:nth-child(3) {
-		background: #28c840;
-	}
-
-	.tile__bar code {
-		margin-left: 0.6rem;
-		overflow: hidden;
-		color: var(--muted);
-		font: 400 0.76rem var(--font-heading);
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-
-	.tile__bar b {
-		margin-left: auto;
-		color: var(--accent);
-		font: 700 0.78rem var(--font-heading);
+		padding: 0.6rem 1rem 0.55rem;
+		background: var(--brass);
+		color: var(--brass-ink);
+		font-size: 0.95rem;
 	}
 
 	.tile__body {
@@ -125,16 +110,8 @@ const hidden_technology_count = technologies.length - visible_technologies.lengt
 	}
 
 	.tile--in-progress {
-		border-color: color-mix(in srgb, #22c55e 45%, transparent);
-		box-shadow:
-			var(--shadow),
-			0 0 0 1px color-mix(in srgb, #22c55e 18%, transparent),
-			0 0 48px -18px color-mix(in srgb, #22c55e 55%, transparent);
-	}
-
-	.tile--in-progress:hover,
-	.tile--in-progress:focus-within {
-		border-color: color-mix(in srgb, #22c55e 70%, transparent);
+		border-top: 6px solid transparent;
+		border-image: repeating-linear-gradient(-45deg, var(--guide) 0 10px, #151614 10px 20px) 6 0 0 0;
 	}
 
 	.tile__badges,
@@ -149,7 +126,7 @@ const hidden_technology_count = technologies.length - visible_technologies.lengt
 	.tile__badge {
 		padding: 0.2rem 0.7rem;
 		border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
-		border-radius: 999px;
+		border-radius: var(--radius);
 		background: color-mix(in srgb, var(--accent) 10%, transparent);
 		color: var(--accent);
 		font: 700 0.74rem var(--font-heading);
@@ -159,8 +136,8 @@ const hidden_technology_count = technologies.length - visible_technologies.lengt
 		display: inline-flex;
 		align-items: center;
 		gap: 0.45rem;
-		border-color: color-mix(in srgb, #22c55e 50%, transparent);
-		background: color-mix(in srgb, #22c55e 14%, transparent);
+		border-color: color-mix(in srgb, var(--status) 50%, transparent);
+		background: color-mix(in srgb, var(--status) 14%, transparent);
 		color: var(--text);
 	}
 
@@ -169,7 +146,7 @@ const hidden_technology_count = technologies.length - visible_technologies.lengt
 		width: 0.45rem;
 		height: 0.45rem;
 		border-radius: 50%;
-		background: #22c55e;
+		background: var(--status);
 	}
 
 	.tile__badge--style {
@@ -229,20 +206,57 @@ const hidden_technology_count = technologies.length - visible_technologies.lengt
 		margin-top: auto;
 	}
 
-	.tile__cta {
+	.tile__footer {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem 1rem;
 		padding-top: 0.9rem;
 		border-top: 1px solid var(--border);
-		color: var(--accent);
 		font: 700 0.85rem var(--font-heading);
 	}
 
-	.tile__cta span {
-		display: inline-block;
-		transition: transform 0.25s ease;
+	.tile__push {
+		--cap-size: 2.1rem;
+		margin-right: auto;
+		color: var(--text);
+		font-size: 0.9rem;
 	}
 
-	.tile:hover .tile__cta span {
-		transform: translateX(4px);
+	/* Pressing anywhere on the exhibit presses its button. */
+	.tile:active .tile__push .push-button__cap {
+		transform: translateY(calc(var(--cap-size) * 0.08));
+		box-shadow: 0 calc(var(--cap-size) * 0.03) 0 var(--signal-deep);
+	}
+
+	/* Proof links stack in a fixed two-line column so every exhibit's footer lines up. */
+	.tile__proofs {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		justify-content: center;
+		gap: 0.15rem;
+		min-height: 2.9rem;
+		text-align: right;
+	}
+
+	.tile__proof {
+		color: var(--muted);
+		font-weight: 500;
+	}
+
+	/* Sits above the stretched open button so the repository opens instead of the dialog. */
+	.tile__source {
+		position: relative;
+		z-index: 2;
+		color: var(--text);
+		font-weight: 500;
+		text-decoration: underline;
+		text-decoration-color: color-mix(in srgb, var(--accent) 50%, transparent);
+		text-underline-offset: 0.25em;
+	}
+
+	.tile__source:hover {
+		color: var(--accent);
 	}
 
 	.project-dialog {
@@ -259,24 +273,23 @@ const hidden_technology_count = technologies.length - visible_technologies.lengt
 	}
 
 	.project-dialog::backdrop {
-		background: rgb(0 0 0 / 0.6);
-		backdrop-filter: blur(6px);
+		background: rgb(0 0 0 / 0.65);
 	}
 
 	.project-dialog__close {
 		position: sticky;
 		top: 0.5rem;
 		z-index: 2;
-		display: block;
-		width: 2.25rem;
-		height: 2.25rem;
-		margin: 0 0.5rem -2.75rem auto;
-		border: 1px solid var(--border);
-		border-radius: 50%;
-		background: var(--surface);
+		display: grid;
+		place-items: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		margin: 0 0.5rem -2.9rem auto;
+		border: 2px solid var(--brass-ink);
+		border-radius: var(--radius);
+		background: var(--surface-strong);
 		color: var(--text);
-		font-size: 1.4rem;
-		line-height: 1;
+		font-size: 1.15rem;
 		cursor: pointer;
 	}
 
@@ -301,14 +314,47 @@ const hidden_technology_count = technologies.length - visible_technologies.lengt
 </style>
 
 <script>
-	document.querySelectorAll<HTMLButtonElement>('[data-open-project]').forEach((opener) => {
-		const dialog = document.getElementById(opener.dataset.openProject ?? '');
-		if (!(dialog instanceof HTMLDialogElement)) return;
+	// Each open project lives at #<slug>, so it can be linked and Back closes it.
+	const project_dialogs = [...document.querySelectorAll<HTMLDialogElement>('dialog[data-project-slug]')];
+	const dialog_for_hash = () => project_dialogs.find((dialog) => location.hash === `#${dialog.dataset.projectSlug}`);
+	let opened_with_history_entry: HTMLDialogElement | null = null;
 
-		opener.addEventListener('click', () => dialog.showModal());
+	const sync_dialogs_with_hash = () => {
+		const target = dialog_for_hash();
+		for (const dialog of project_dialogs) {
+			if (dialog !== target && dialog.open) dialog.close();
+		}
+		if (target && !target.open) target.showModal();
+	};
+
+	for (const dialog of project_dialogs) {
+		const project_hash = `#${dialog.dataset.projectSlug}`;
+		document.querySelector(`[data-open-project="${dialog.id}"]`)?.addEventListener('click', () => {
+			if (location.hash !== project_hash) {
+				history.pushState(null, '', project_hash);
+				opened_with_history_entry = dialog;
+			}
+			dialog.showModal();
+		});
 		dialog.querySelector('[data-close-project]')?.addEventListener('click', () => dialog.close());
 		dialog.addEventListener('click', (event) => {
 			if (event.target === dialog) dialog.close();
 		});
+		// Esc, ×, backdrop and Back all end here; only the first three still have the hash to remove.
+		dialog.addEventListener('close', () => {
+			if (location.hash !== project_hash) return;
+			if (opened_with_history_entry === dialog) {
+				opened_with_history_entry = null;
+				history.back();
+			} else {
+				history.replaceState(null, '', location.pathname + location.search);
+			}
+		});
+	}
+
+	addEventListener('popstate', () => {
+		opened_with_history_entry = null;
+		sync_dialogs_with_hash();
 	});
+	sync_dialogs_with_hash();
 </script>
