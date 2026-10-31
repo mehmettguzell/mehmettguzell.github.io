@@ -14,7 +14,7 @@
   "nav.cv_download": "Download CV",
   "nav.cv_english": "English CV",
   "nav.cv_turkish": "Türkçe CV",
-  "hero.lead": "I build full-stack systems in Java, Python and Go, and take them to production on the cloud with DevOps workflows, as I did in my internships. Right now I am going deeper on AWS, Kubernetes, OpenShift and LiteLLM.",
+  "hero.lead": "I develop backend applications using Java and Python, as well as web and mobile applications using React and React Native. I deploy the applications I build to cloud and production environments by integrating CI/CD and DevOps practices. My internships have given me hands-on experience with production environments. I am currently expanding my knowledge of Terraform, AWS, Kubernetes, OpenShift, and LiteLLM.",
   "upcoming.label": "Blog posts coming soon:",
   "upcoming.topics": "OpenShift|Kubernetes|Terraform|CI/CD|LiteLLM|LLM systems",
   "hero.cta_cv": "Download CV",

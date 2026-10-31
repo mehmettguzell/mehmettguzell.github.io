@@ -14,7 +14,7 @@
   "nav.cv_download": "CV indir",
   "nav.cv_english": "English CV",
   "nav.cv_turkish": "Türkçe CV",
-  "hero.lead": "Java, Python ve Go ile full-stack sistemler geliştiriyor, bunları DevOps süreçleriyle buluta ve üretime taşıyorum; stajlarımda da bunu yaptım. Şu anda AWS, Kubernetes, OpenShift ve LiteLLM üzerinde derinleşiyorum.",
+  "hero.lead": "Java ve Python ile backend, React ve React Native ile web ve mobil uygulama geliştirme üzerine çalışıyorum. Geliştirdiğim uygulamaları CI/CD ve DevOps süreçleriyle buluta ve production ortamlarına taşıyorum. Stajlarım sırasında production ortamlarında deneyim kazandım. Şu anda Terraform, AWS, Kubernetes, OpenShift ve LiteLLM teknolojileri üzerinde kendimi geliştiriyorum.",
   "upcoming.label": "Yakında blog yazıları:",
   "upcoming.topics": "OpenShift|Kubernetes|Terraform|CI/CD|LiteLLM|LLM sistemleri",
   "hero.cta_cv": "CV indir",
