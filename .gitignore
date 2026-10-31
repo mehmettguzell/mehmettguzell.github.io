@@ -1,2 +1,13 @@
 docs
 CONTEXT.md
+
+# Local agent and design tooling: kept on this machine, not in the repo
+.impeccable/
+.github/hooks/impeccable.json
+DESIGN.md
+PRODUCT.md
+app/CLAUDE.md
+app/AGENTS.md
+
+# Editor settings
+app/.vscode/
