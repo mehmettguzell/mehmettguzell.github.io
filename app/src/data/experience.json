@@ -1,13 +1,13 @@
 [
   {
     "role": {
-      "en": "Fullstack Developer Intern",
-      "tr": "Fullstack Developer Stajyeri"
+      "en": "Backend Developer Intern",
+      "tr": "Backend Developer Stajyeri"
     },
     "organization": "Codexist",
     "location": {
-      "en": "Istanbul, Türkiye",
-      "tr": "İstanbul, Türkiye"
+      "en": "Ataşehir, Istanbul",
+      "tr": "Ataşehir, İstanbul"
     },
     "period": {
       "en": "August 2026 – September 2026",
@@ -15,76 +15,73 @@
     },
     "highlights": [
       {
-        "en": "Researched GEO (Generative Engine Optimization) and designed the architecture: the same prompts go to several LLM providers again and again, and a company's visibility against its competitors is reported with a statistical margin of error.",
-        "tr": "GEO (Generative Engine Optimization) üzerine araştırma yapıp mimariyi tasarladım: aynı promptlar birden fazla LLM sağlayıcıya tekrar tekrar gönderiliyor ve bir şirketin rakiplerine göre görünürlüğü istatistiksel hata payı göz önünde bulundurularak raporlanıyor."
+        "en": "Researched GEO (Generative Engine Optimization) and designed the project's architecture. The project measures how visible a company is in LLM answers compared to its competitors, with a margin of error, then reports the results and generates recommendations.",
+        "tr": "GEO (Generative Engine Optimization) üzerine araştırma yapıp projenin mimarisini tasarladım. Projenin amacı bir şirketin LLM cevaplarında rakiplerine göre ne kadar görünür olduğunu hata payıyla hesaplamak, raporlamak ve çözüm önerileri üretmek."
       },
       {
-        "en": "Split the daily crawling and analysis into independent tasks run by asynchronous Celery + Redis workers, and built a pipeline that collects data from several LLM providers, analyzes it and computes the metrics. Used a sliding-window approach to reduce the measurement error of repeated LLM queries.",
-        "tr": "Günlük tarama ve analiz işlerini Celery + Redis ile bağımsız görevlere bölüp asenkron çalışan worker'lara dağıttım; birden fazla LLM sağlayıcısından veri toplayan, analiz eden ve metrikleri hesaplayan bir pipeline geliştirdim. Tekrarlı LLM sorgularındaki ölçüm hatasını azaltmak için sliding window yöntemi kullandım."
+        "en": "Built a pipeline with data collection, analysis, calculation and reporting stages. Collected data from multiple LLM providers and ran the daily scanning and analysis jobs asynchronously. Built the frontend with TypeScript and React.",
+        "tr": "Bilgi toplama, analiz, hesaplama ve raporlama aşamalarından oluşan bir pipeline kurdum. Birden fazla LLM sağlayıcısından veri toplayıp günlük tarama ve analiz işlerini asenkron olacak şekilde çalıştırdım. TypeScript/React ile arayüz oluşturdum."
       },
       {
-        "en": "Exposed the analysis pipeline as FastAPI services on PostgreSQL and connected them to a TypeScript/React frontend, where the computed metrics can be viewed and the pipeline can be triggered manually. Packaged the whole application with Docker Compose so it runs as one setup.",
-        "tr": "Analiz akışını PostgreSQL üzerinde çalışan FastAPI servislerine dönüştürüp TypeScript/React arayüzüne bağladım; hesaplanan metrikler arayüzden görüntülenebiliyor ve analiz pipeline'ı manuel olarak tetiklenebiliyor. Uygulamanın tamamını Docker Compose ile çalıştırılabilir bir yapıda paketledim."
+        "en": "Defined the AWS infrastructure in Terraform, including the number of EC2 instances and scheduled scaling. Automated server setup with Ansible and packaged the application with Docker Compose.",
+        "tr": "AWS altyapısını, EC2 sayısı ve zamanlanmış ölçekleme dahil, Terraform ile kodladım. Sunucu kurulumunu Ansible ile otomatikleştirdim ve uygulamayı Docker Compose ile paketledim."
+      },
+      {
+        "en": "Set up a GitHub Actions pipeline that runs lint and unit tests on every push and PR. When changes are merged into main, the image is built, pushed to ECR and deployed to EC2 automatically.",
+        "tr": "GitHub Actions ile her push ve PR'da lint ve unit test çalışıyor. main'e merge edilince image build edilip ECR'a gönderiliyor ve EC2'ye otomatik deploy ediliyor."
       }
     ],
     "summary": {
-      "en": "Designed and built a system that measures how visible companies are in AI chatbot answers.",
-      "tr": "Şirketlerin yapay zekâ sohbet yanıtlarında ne kadar göründüğünü ölçen bir sistemi tasarlayıp geliştirdim."
-    },
-    "gained": {
-      "en": "I carried a software project through its whole life cycle, from requirements analysis and architecture design to development and integration. I gained hands-on experience in asynchronous system design, modular backend architecture and multi-provider LLM integration.",
-      "tr": "Gereksinim analizinden mimari tasarıma, geliştirmeden entegrasyona kadar bir yazılım projesinin tüm yaşam döngüsünü yürüttüm. Asenkron sistem tasarımı, modüler backend mimarisi ve çoklu LLM sağlayıcı entegrasyonu konularında pratik deneyim kazandım."
+      "en": "Took an application from development to production end to end. Designed its scalable architecture, set up CI/CD pipelines with GitHub Actions, and managed its deployment to AWS using Terraform and Docker.",
+      "tr": "Bir uygulamayı geliştirme aşamasından production'a kadar baştan sona yürüttüm. Ölçeklenebilir mimarisini tasarladım, GitHub Actions ile CI/CD pipeline'larını kurdum, Terraform ve Docker ile AWS'ye deployment sürecini yönettim."
     },
     "technologies": [
       "Python",
-      "FastAPI",
-      "Celery",
-      "Redis",
-      "PostgreSQL",
       "React",
       "TypeScript",
-      "Docker Compose"
+      "Terraform",
+      "Ansible",
+      "AWS EC2",
+      "ECR",
+      "Docker Compose",
+      "GitHub Actions"
     ]
   },
   {
     "role": {
-      "en": "Application Security Long-Term Intern",
-      "tr": "Application Security Uzun Dönem Stajyeri"
+      "en": "Cyber Security Intern",
+      "tr": "Cyber Security Stajyeri"
     },
     "organization": "Privia Security",
     "location": {
-      "en": "Istanbul, Türkiye",
-      "tr": "İstanbul, Türkiye"
+      "en": "Ataşehir, Istanbul",
+      "tr": "Ataşehir, İstanbul"
     },
     "period": {
-      "en": "June 2024 – July 2025",
-      "tr": "Haziran 2024 – Temmuz 2025"
+      "en": "July 2023 – July 2024",
+      "tr": "Temmuz 2023 – Temmuz 2024"
     },
     "highlights": [
       {
-        "en": "**Web Application Security:** Analyzed production web applications at the code and API level, and found and reported security vulnerabilities as part of penetration tests.",
-        "tr": "**Web Application Security:** Canlı web uygulamalarını kod ve API seviyesinde analiz ederek penetrasyon testleri kapsamında güvenlik açıklarını tespit ettim ve raporladım."
+        "en": "Analyzed live web applications at the code and API level as part of penetration tests, and identified and reported security vulnerabilities.",
+        "tr": "Canlı web uygulamalarını kod ve API seviyesinde analiz ederek penetrasyon testleri kapsamında güvenlik açıklarını tespit ettim ve raporladım."
       },
       {
-        "en": "**Security Automation:** Built Python tools that automated repetitive security checks and improved the team's technical workflows.",
-        "tr": "**Security Automation:** Tekrarlayan güvenlik kontrollerini otomatikleştiren ve ekibin teknik iş akışlarını iyileştiren Python araçları geliştirdim."
+        "en": "Built tools that automate recurring security checks and improve the team's technical workflows.",
+        "tr": "Tekrarlayan güvenlik kontrollerini otomatikleştiren ve ekibin teknik iş akışlarını iyileştiren araçlar geliştirdim."
       },
       {
-        "en": "**Remediation Support:** Worked with development teams to close the findings, proposing actionable, code-level fixes.",
-        "tr": "**Remediation Support:** Tespit edilen açıkların giderilmesi için geliştirme ekipleriyle iş birliği yaparak uygulanabilir, kod seviyesinde çözüm önerileri sundum."
+        "en": "Worked with development teams to fix the identified vulnerabilities and suggested code-level solutions.",
+        "tr": "Tespit edilen açıkların giderilmesi için geliştirme ekipleriyle görüşerek kod seviyesinde çözüm önerileri sundum."
       },
       {
-        "en": "**Vulnerability Research and Disclosure:** Found a stored XSS vulnerability in a web application and reported it to USOM through responsible disclosure; it was recorded as CVE-2025-1301.",
-        "tr": "**Vulnerability Research and Disclosure:** Bir web uygulamasında stored XSS açığı tespit ettim; bulguyu sorumlu bildirim süreciyle USOM'a ilettim ve açık CVE-2025-1301 olarak kaydedildi."
+        "en": "Found a stored XSS vulnerability in a web application and reported it to USOM; it was recorded as CVE-2025-1301.",
+        "tr": "Bir web uygulamasında stored XSS açığı buldum ve USOM'a bildirdim; açık CVE-2025-1301 olarak kaydedildi."
       }
     ],
     "summary": {
       "en": "Tested real web applications for security holes and wrote tools that made the team faster.",
       "tr": "Gerçek web uygulamalarında güvenlik açığı aradım ve ekibi hızlandıran araçlar yazdım."
-    },
-    "gained": {
-      "en": "I went through the whole security process end to end, from code and API analysis to finding, reporting and fixing, and learned to write clear reports and communicate with customers. I learned to read code the way an attacker would (hacker mindset) and to write secure code.",
-      "tr": "Kod ve API analizinden zafiyet tespitine, raporlamadan düzeltmeye kadar güvenlik sürecini uçtan uca yaşadım; müşteriyle iletişim kurmayı ve anlaşılır rapor yazmayı öğrendim. Koda bir saldırgan gibi bakmayı (hacker mindset) ve güvenli kod geliştirmeyi öğrendim."
     },
     "technologies": [
       "Python",

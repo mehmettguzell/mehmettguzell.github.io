@@ -42,7 +42,13 @@
       "IAM",
       "SSM",
       "Secrets Manager",
-      "OIDC"
+      "OIDC",
+      "Terraform",
+      "Ansible",
+      "Kubernetes",
+      "OpenShift",
+      "Jenkins",
+      "GitOps"
     ]
   },
   {
@@ -89,23 +95,11 @@
       "TypeScript",
       "SQL",
       "Bash",
+      "Git",
       "React",
       "React Native",
       "Next.js",
       "TailwindCSS"
     ]
-  },
-  {
-    "label": {
-      "en": "Currently focusing on",
-      "tr": "Şu an odaklandığım"
-    },
-    "skills": [
-      "Kubernetes",
-      "OpenShift",
-      "Terraform",
-      "LiteLLM"
-    ],
-    "learning": true
   }
 ]

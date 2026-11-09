@@ -23,29 +23,25 @@
       }
     ],
     "tagline": {
-      "en": "I am developing a personal productivity app that combines calendar, task, project, and budget management with offline support and cross-device synchronization.",
-      "tr": "Çevrimdışı kullanım ve cihazlar arası senkronizasyon desteği sunan, takvim, görev, proje ve bütçe yönetimini tek bir uygulamada birleştiren kişisel verimlilik uygulaması geliştiriyorum."
+      "en": "A personal productivity app for desktop and mobile that brings calendar, tasks, projects and budget together.",
+      "tr": "Takvim, görev, proje ve bütçe yönetimini tek yerde birleştiren, mobil ve masaüstü için kişisel verimlilik uygulaması."
     },
     "points": [
       {
-        "en": "What it does: Combines calendar, task, and project management with budget tracking and investment goals, allowing users to manage their plans and financial goals in one place.",
-        "tr": "**Ne yapıyor:** Takvim, görev ve proje yönetimini; bütçe takibi ve yatırım hedefleriyle birleştirerek tüm planlarını ve finansal hedeflerini tek bir yerden yönetmeni sağlar."
+        "en": "A personal productivity app that brings calendar, task, project and budget management together in one place, available on both mobile and desktop. Still in development.",
+        "tr": "Takvim, görev, proje ve bütçe yönetimini tek bir yerde birleştiren kişisel verimlilik uygulaması. Hem mobil hem de masaüstü uygulaması. Geliştirmesi devam ediyor."
       },
       {
-        "en": "Local-first: Stores data locally, allowing the application to work offline. When an internet connection is available, it synchronizes data across devices.",
-        "tr": "**Local-first:** Verileri localde saklanır ve uygulama internet bağlantısı olmadan çalışabilir. İnternet erişimi sağlandığında verileri diğer cihazlarla senkronize eder."
+        "en": "I developed the backend with Java 25 and Spring Boot using a modular structure. I used Keycloak for authentication and Server-Sent Events for syncing data across devices. The database is PostgreSQL, with its schema managed by Flyway.",
+        "tr": "Backend'i Java 25 ve Spring Boot ile modüler bir yapıda geliştirdim. Kimlik doğrulama için Keycloak'u, cihazlar arası senkronizasyon için Server-Sent Events'i kullandım. Veritabanı PostgreSQL, şema ise Flyway ile yönetiliyor."
       },
       {
-        "en": "Backend: Developed a modular backend using Java 25 and Spring Boot. Managed the database schema with PostgreSQL and Flyway, and used Keycloak for authentication, Bucket4j for rate limiting, and Server-Sent Events for device synchronization.",
-        "tr": "**Backend:** Java 25 ve Spring Boot ile modüler bir mimarisi olarak geliştirdim. PostgreSQL ve Flyway ile veritabanı yapısını yönettim; kimlik doğrulama, istek sınırlama ve cihazlar arası veri senkronizasyonu için Keycloak, Bucket4j ve Server-Sent Events kullandım"
+        "en": "The app is local-first. Data is stored on the device, the app works without an internet connection, and data syncs with other devices once the connection is back.",
+        "tr": "Uygulama local-first çalışıyor. Veriler cihazda saklanıyor, uygulama internet olmadan da kullanılabiliyor ve bağlantı gelince veriler diğer cihazlarla senkronize oluyor."
       },
       {
-        "en": "**CI/CD:** Planning to automate backend testing, application builds and releases. The pipeline will include integration tests with PostgreSQL, database migration checks and architectural rules, alongside automated builds for desktop platforms.",
-        "tr": "**CI/CD ve dağıtım:** Backend testlerini, uygulama derlemelerini ve sürüm yayınlama süreçlerini otomatikleştirmeyi planlıyorum. Pipeline; PostgreSQL ile entegrasyon testlerini, veritabanı migration kontrollerini, mimari kuralları ve masaüstü platformları için otomtika derlemeleri kapsayacak."
-      },
-      {
-        "en": "**Still in progress:** The application is under active development, and the backend has not been deployed to a live server yet. Next, I plan to configure Docker-based deployment, set up staging and production environments, add frontend checks to CI, and develop the Android app with Expo.",
-        "tr": "**Geliştirme durumu:** Uygulamanın geliştirilmesi devam ediyor ve backend henüz canlı sunucuya alınmadı. Sıradaki adımlarım Docker tabanlı dağıtımı yapılandırmak, staging ve production ortamlarını kurmak, CI sürecine frontend kontrollerini eklemek ve Expo ile Android uygulamasını geliştirmek."
+        "en": "I packaged the backend with a multi-stage Docker build. I set up a CI/CD pipeline that runs the tests and automatically builds the desktop version on every change. If a new version passes the tests, it is automatically deployed to a VPS I rented.",
+        "tr": "Backend'i multi-stage Docker ile paketledim. Her değişiklikte testleri çalıştırıp masaüstü sürümünü otomatik derleyen bir CI/CD pipeline'ı kurdum. Yeni sürüm testlerden geçerse kiraladığım VPS sunucusuna otomatik olarak deploy ediliyor."
       }
     ],
     "technologies": [
@@ -266,25 +262,21 @@
     "name": "AI Visibility & GEO Intelligence Platform",
     "short_name": "GEO Visibility",
     "tagline": {
-      "en": "A GEO (Generative Engine Optimization) analysis system that measures how visible brands are in LLM answers, compares them with competitors and reports prompt coverage, appearance and recommendation rates with confidence intervals. I derived the requirements from technical documentation and earlier research, then designed and built it with independent decisions (internship).",
-      "tr": "Markaların LLM yanıtlarındaki görünürlüğünü ölçen, rakiplerle karşılaştıran ve prompt kapsamasını, görünme ve önerilme oranlarını güven aralıklarıyla raporlayan bir GEO (Generative Engine Optimization) analiz sistemi. Gereksinimleri teknik dokümantasyon ve geçmiş araştırmalardan çıkardım; mimariyi ve teknoloji seçimlerini kendim belirleyerek tasarlayıp geliştirdim."
+      "en": "A GEO analysis system that measures how visible brands are in LLM answers and compares them with competitors.",
+      "tr": "Markaların LLM yanıtlarındaki görünürlüğünü ölçen ve rakiplerle karşılaştıran bir GEO analiz sistemi."
     },
     "points": [
       {
-        "en": "**My role and approach:** I set the architecture and the technology choices myself. I split the work into Celery tasks on five queues, kept the backend in one-way layers (api → service → domain, repository and engines → models), and built the dashboard that starts runs and shows their results.",
-        "tr": "**Rolüm ve yaklaşımım:** Mimariyi ve teknoloji seçimlerini kendim belirledim. İşi beş kuyrukta çalışan Celery task'lerine böldüm, backend'i tek yönlü katmanlarla kurdum (api → service → domain, repository ve engines → models) ve çalıştırmaları başlatıp sonuçlarını gösteren dashboard'u geliştirdim."
+        "en": "I designed the architecture and built the backend with FastAPI and PostgreSQL. The work runs as Celery tasks on five queues: pipeline, collector, analyzer, metrics and reports.",
+        "tr": "Mimariyi tasarladım ve backend'i FastAPI ve PostgreSQL ile geliştirdim. İş, beş kuyrukta çalışan Celery task'lerine bölünüyor: pipeline, collector, analyzer, metrics ve reports."
       },
       {
-        "en": "**Technical approach:** a pipeline run is held together by Celery chords: analysis starts only after the last answer is collected, and metrics only after the last answer is read. Every stage keeps its own run row in PostgreSQL, so the dashboard shows progress as it happens. Celery Beat runs the same stages on a daily schedule, and reports are generated separately.",
-        "tr": "**Teknik yaklaşım:** bir pipeline çalıştırmasını Celery chord'ları bir arada tutuyor: analiz son yanıt toplanınca, metrik hesabı da son yanıt okununca başlıyor. Her aşama PostgreSQL'de kendi run kaydını tutuyor, böylece dashboard ilerlemeyi anlık gösterebiliyor. Celery Beat aynı aşamaları günlük takvimle çalıştırıyor; raporlar ayrıca üretiliyor."
+        "en": "I linked the stages with Celery chords: analysis starts after the last answer is collected, and metrics after the last answer is analyzed. Each stage keeps its own run record, so the dashboard shows progress live.",
+        "tr": "Aşamaları Celery chord'larıyla bağladım: analiz son yanıt toplanınca, metrik hesabı da son yanıt analiz edilince başlıyor. Her aşama kendi run kaydını tutuyor, böylece dashboard ilerlemeyi anlık gösteriyor."
       },
       {
-        "en": "**What I gained as an engineer:** end-to-end project ownership (research, planning, architecture, development), making technical decisions on my own with an MVP focus, breaking a large system into small testable parts, and thinking about observability and maintainability, not only functionality.",
-        "tr": "**Deneyim kazanımlarım:** uçtan uca proje sahipliği (araştırma, planlama, mimari, geliştirme), MVP odaklı ilerleyip teknik kararları kendim alma, büyük bir sistemi küçük ve test edilebilir parçalara ayırma, sadece işlevselliği değil izlenebilirliği ve sürdürülebilirliği de düşünme."
-      },
-      {
-        "en": "**Technical gains:** gaining hands-on experience in system design and modular architecture, managing asynchronous workflows, integrating multiple LLM providers through a common interface, implementing statistical metrics in code, and developing backend and frontend components end to end.",
-        "tr": "**Teknik kazanımlarım:** Sistem tasarımı ve modüler mimari oluşturma, asenkron iş akışlarını yönetme, farklı LLM sağlayıcılarını ortak bir yapı üzerinden entegre etme, istatistiksel metrikleri uygulamaya dönüştürme ve backend ile frontend bileşenlerini uçtan uca geliştirme konularında pratik deneyim kazandım."
+        "en": "Answers are collected from multiple LLM providers through a common interface. Metrics such as Share of Voice and appearance and recommendation rates are reported with confidence intervals.",
+        "tr": "Yanıtlar ortak bir arayüz üzerinden birden fazla LLM sağlayıcısından toplanıyor. Share of Voice, görünme ve önerilme oranları gibi metrikler güven aralıklarıyla raporlanıyor."
       }
     ],
     "technologies": [
@@ -504,33 +496,29 @@
     "name": "STOP",
     "short_name": "STOP",
     "tagline": {
-      "en": "A football match organization platform built with a microservices architecture. The React Native mobile app connects to five independent Spring Boot services, using event-driven communication, service-level security and automated AWS deployments.",
-      "tr": "Mikroservis mimarisiyle geliştirilen bir futbol maçı organizasyon platformu. React Native mobil uygulaması; olay tabanlı iletişim, servis düzeyinde güvenlik ve otomatik AWS dağıtımıyla desteklenen beş bağımsız Spring Boot servisiyle çalışır."
+      "en": "A mobile app for organizing pickup football matches, backed by five microservices.",
+      "tr": "Halı saha maçlarını düzenlemek için geliştirdiğim, beş mikroservisten oluşan bir mobil uygulama."
     },
     "points": [
       {
-        "en": "**Architecture and system design:** Decomposed the backend into five independent Spring Boot services (Gateway, Identity, Match, Communication and Notification), each with its own PostgreSQL database and Flyway-managed schema. This separates service responsibilities and data ownership.",
-        "tr": "**Mimari ve sistem tasarımı:** Backend'i beş bağımsız Spring Boot servisine ayırdım (Gateway, Identity, Match, Communication ve Notification). Her servis kendi PostgreSQL veritabanına ve Flyway ile yönetilen şemasına sahip. Böylece servis sorumluluklarını ve veri sahipliğini birbirinden ayırdım."
+        "en": "I developed the backend with Java Spring and split it into five services: Gateway, Identity, Match, Communication and Notification. Each service has its own PostgreSQL database, with its schema managed by Flyway.",
+        "tr": "Backend'i Java Spring ile geliştirdim ve projeyi beş servise ayırdım: Gateway, Identity, Match, Communication ve Notification. Her servisin kendi PostgreSQL veritabanı ve Flyway şeması var."
       },
       {
-        "en": "**Event-driven architecture** Services talk mostly through Kafka events (20+ topics) instead of calling each other. The Notification service listens to them and turns them into notifications; Communication and Identity react to match events too.",
-        "tr": "**Event-driven architecture** Servisler birbirini çağırmak yerine ağırlıklı olarak Kafka event'leriyle haberleşiyor (20'den fazla topic). Notification servisi bu event'leri dinleyip bildirime dönüştürüyor; Communication ve Identity de maç event'lerine tepki veriyor."
+        "en": "The services mostly communicate through Kafka events (20+ topics), and notifications are generated from these events.",
+        "tr": "Servisler çoğunlukla Kafka event'leriyle haberleşiyor (20+ topic). Bildirimler de bu event'lerden üretiliyor."
       },
       {
-        "en": "**Core application features:** Developed match participation requests, invitations, a FIFO waitlist that automatically admits the next player when a spot becomes available, real-time match chat using WebSocket and STOMP, and a goalkeeper-call feature.",
-        "tr": "**Temel uygulama özellikleri:** Maçlara katılım isteklerini, davetleri, boş yer açıldığında sıradaki oyuncuyu otomatik kabul eden FIFO bekleme listesini, WebSocket ve STOMP ile gerçek zamanlı maç sohbetini ve kaleci çağırma özelliğini geliştirdim."
+        "en": "I built match join requests, invitations, a waitlist that automatically brings in the next player when a spot opens up, match chat with WebSocket/STOMP, and calling a goalkeeper.",
+        "tr": "Maça katılma isteği, davet, yer açılınca sıradaki oyuncuyu otomatik alan bekleme listesi, WebSocket/STOMP ile maç sohbeti ve kaleci çağırma özelliklerini geliştirdim."
       },
       {
-        "en": "**Request Security and Traffic Control:** Implemented RSA public key-based JWT verification across all services, Redis-backed rate limiting with Bucket4j at the gateway, and Resilience4j circuit breakers with fallbacks to limit the impact of service failures.",
-        "tr": "**İstek Güvenliği ve Trafik Kontrolü:** Tüm servislerde RSA public key ile JWT doğrulaması, gateway katmanında Bucket4j ve Redis ile istek sınırlaması, servis hatalarının etkisini azaltmak için ise Resilience4j circuit breaker ve fallback mekanizmaları uyguladım."
+        "en": "I added JWT authentication to the services. With rate limiting and circuit breakers, the system keeps running under heavy traffic and when failures occur.",
+        "tr": "Servislere JWT ile kimlik doğrulama ekledim. Rate limiting ve circuit breaker ile sistemin yoğun trafikte ve hata durumlarında çalışmaya devam etmesini sağladım."
       },
       {
-        "en": "**CI/CD and Deployment:** Built a GitHub Actions pipeline triggered by version tags to build all five services, validate them using Docker Compose health checks, and publish Git SHA-tagged images to GHCR. Automated deployment to AWS EC2 through AWS Systems Manager without SSH, with secrets managed by AWS Secrets Manager, sequential service startup, and automatic rollback to previous images if health checks fail.",
-        "tr": "**CI/CD ve Dağıtım:** Sürüm etiketleriyle tetiklenen bir GitHub Actions pipeline'ı geliştirerek beş servisin derlenmesini, Docker Compose üzerinden sağlık kontrollerinin yapılmasını ve Git SHA ile etiketlenen imajların GHCR'a gönderilmesini otomatikleştirdim. AWS Systems Manager üzerinden SSH kullanmadan AWS EC2'ye dağıtımı otomatikleştirdim; gizli bilgileri AWS Secrets Manager ile yönettim, servisleri sıralı başlattım ve sağlık kontrolleri başarısız olduğunda önceki imajlara otomatik geri dönüş sağladım."
-      },
-      {
-        "en": "**Engineering Experience:** Gained hands-on experience designing and building a distributed application, from defining service boundaries and data ownership to implementing asynchronous communication, handling failures, securing APIs, and automating deployments. Developed a broader understanding of how mobile clients, backend services, messaging infrastructure, and deployment workflows work together as a complete system.",
-        "tr": "**Mühendislik Deneyimi:** Servis sınırlarını ve veri sahipliğini belirlemekten asenkron iletişim kurmaya, hataları yönetmekten API güvenliğini sağlamaya ve dağıtımı otomatikleştirmeye kadar dağıtık bir uygulamanın tasarımı ve geliştirilmesi konusunda pratik deneyim kazandım. Mobil istemcinin, backend servislerinin, mesajlaşma altyapısının ve dağıtım süreçlerinin bütün bir sistem olarak nasıl çalıştığını kavradım."
+        "en": "I set up a CI/CD pipeline that builds the services and deploys them to AWS when a tag is pushed. If a deployment fails, the system rolls back to the previous version automatically.",
+        "tr": "Tag atıldığında servisleri otomatik olarak build edip AWS'ye deploy eden bir CI/CD pipeline kurdum. Deploy başarısız olursa sistem kendiliğinden önceki sürüme dönüyor."
       }
     ],
     "technologies": [
@@ -701,33 +689,21 @@
     "name": "DevOps Todo App",
     "short_name": "DevOps Todo",
     "tagline": {
-      "en": "A learning project for exploring DevOps fundamentals through automated testing, Docker, CI/CD pipelines and secure AWS deployment.",
-      "tr": "Otomatik testler, Docker, CI/CD pipeline'ları ve AWS üzerinde güvenli dağıtım aracılığıyla DevOps temellerini öğrenmek için geliştirdiğim bir proje."
+      "en": "A task app I built to learn DevOps basics: automated tests, Docker, CI/CD and AWS deployment.",
+      "tr": "DevOps temellerini öğrenmek için geliştirdiğim bir görev uygulaması: otomatik testler, Docker, CI/CD ve AWS'ye deploy."
     },
     "points": [
       {
-        "en": "**Task management:** Built a task app where untouched tasks gradually fade and are archived, with recommendations based on remaining time and energy. The daily time budget is stored in browser localStorage.",
-        "tr": "**Görev yönetimi:** Dokunulmayan görevlerin zamanla solup arşivlendiği ve kalan zamana ve enerjiye göre görev öneren bir uygulama geliştirdim. Günlük süre bütçesi tarayıcının localStorage alanında saklanıyor."
+        "en": "I set up GitHub Actions to run backend and frontend checks only when their files change. A version tag builds multi-stage Docker images and pushes them to GHCR.",
+        "tr": "GitHub Actions'ı backend ve frontend kontrollerini yalnızca ilgili dosyalar değiştiğinde çalıştıracak şekilde kurdum. Sürüm etiketi atılınca multi-stage Docker imajları build edilip GHCR'a gönderiliyor."
       },
       {
-        "en": "**CI/CD automation:** Configured GitHub Actions to run backend tests and linting only when backend files change, and frontend linting only when frontend files change. Version tags trigger builds only for images changed since the previous release.",
-        "tr": "**CI/CD otomasyonu:** Backend dosyaları değiştiğinde backend testlerini ve lint kontrollerini, frontend dosyaları değiştiğinde ise frontend lint kontrolünü çalıştıran GitHub Actions iş akışları oluşturdum. Sürüm etiketleri, önceki sürümden bu yana değişen imajların build edilmesini tetikliyor."
+        "en": "Deployment to AWS EC2 runs through SSM Run Command with GitHub OIDC and short-lived IAM credentials, so no SSH keys or stored AWS credentials are needed.",
+        "tr": "AWS EC2'ye deploy, GitHub OIDC ve kısa ömürlü IAM kimlik bilgileriyle SSM Run Command üzerinden yapılıyor; SSH anahtarı ya da saklanan AWS kimlik bilgisi gerekmiyor."
       },
       {
-        "en": "**Containerization and releases:** Used multi-stage Docker builds to reduce image size and published images to GHCR with Git SHA, version, and latest tags.",
-        "tr": "**Konteynerleştirme ve sürümleme:** İmaj boyutlarını küçültmek için multi-stage Docker build kullandım. İmajları Git SHA, sürüm numarası ve latest etiketleriyle GHCR'a gönderdim."
-      },
-      {
-        "en": "**Secure deployment:** Automated deployment to AWS EC2 through SSM Run Command using GitHub OIDC and short-lived IAM credentials, eliminating the need for SSH keys and stored AWS credentials. The server retrieves environment configuration from SSM Parameter Store using its own IAM role.",
-        "tr": "**Güvenli dağıtım:** GitHub OIDC ve kısa ömürlü IAM kimlik bilgileriyle SSM Run Command üzerinden AWS EC2 dağıtımını otomatikleştirdim. Böylece SSH anahtarı veya kalıcı AWS kimlik bilgisi saklama ihtiyacını ortadan kaldırdım. Sunucu, ortam yapılandırmasını kendi IAM rolüyle SSM Parameter Store'dan alıyor."
-      },
-      {
-        "en": "**Deployment reliability:** Configured Docker Compose health checks, service startup dependencies, and a database memory limit. The deployment pipeline waits up to 180 seconds for services to become healthy and fails if any service does not pass its health check.",
-        "tr": "**Dağıtım güvenilirliği:** Docker Compose ile sağlık kontrollerini, servislerin başlatılma sırasını ve veritabanı bellek limitini yapılandırdım. Dağıtım pipeline'ı servislerin sağlıklı duruma gelmesi için 180 saniyeye kadar bekliyor; herhangi bir servis sağlık kontrolünü geçemezse başarısız oluyor."
-      },
-      {
-        "en": "**Engineering Learnings:** Gained hands-on experience with the fundamentals of CI/CD, containerization, automated testing, image versioning, and secure cloud deployment. Learned how to automate delivery workflows, manage credentials using IAM, and validate deployments with health checks.",
-        "tr": "**Mühendislik Kazanımları:** CI/CD, konteynerleştirme, otomatik testler, imaj sürümleme ve güvenli bulut dağıtımının temellerini uygulamalı olarak öğrendim. Dağıtım süreçlerini otomatikleştirme, IAM ile kimlik bilgilerini yönetme ve sağlık kontrolleriyle dağıtımları doğrulama deneyimi kazandım."
+        "en": "Docker Compose health checks validate each deployment. The pipeline waits up to 180 seconds and fails if a service does not become healthy.",
+        "tr": "Her deploy Docker Compose health check'leriyle doğrulanıyor. Pipeline 180 saniyeye kadar bekliyor ve bir servis sağlıklı duruma gelmezse başarısız oluyor."
       }
     ],
     "technologies": [
@@ -843,17 +819,17 @@
     "name": "Event-Driven Order Management Platform",
     "short_name": "Order Platform",
     "tagline": {
-      "en": "An online-shop backend where orders, stock and payment stay consistent across 5 services.",
-      "tr": "Sipariş, stok ve ödemenin 5 servis arasında tutarlı kaldığı bir online mağaza backend'i."
+      "en": "An online-shop backend of five services that keeps orders, stock and payments consistent.",
+      "tr": "Sipariş, stok ve ödemeyi tutarlı tutan, beş servisten oluşan bir online mağaza backend'i."
     },
     "points": [
       {
-        "en": "Five services (user, product, order, inventory, payment), each with its own database.",
-        "tr": "Beş servis (user, product, order, inventory, payment); her birinin kendi veritabanı var."
+        "en": "I split the backend into five services (user, product, order, inventory, payment), each with its own PostgreSQL database.",
+        "tr": "Backend'i beş servise ayırdım (user, product, order, inventory, payment). Her servisin kendi PostgreSQL veritabanı var."
       },
       {
-        "en": "Stock and payment run asynchronously over RabbitMQ; the Saga pattern with compensating transactions keeps data consistent when a step fails, and row-level locking handles concurrent stock updates.",
-        "tr": "Stok ve ödeme RabbitMQ üzerinden asenkron işleniyor; bir adım başarısız olursa Saga pattern ve telafi edici işlemler veriyi tutarlı tutuyor, eşzamanlı stok güncellemelerini row-level locking yönetiyor."
+        "en": "Stock and payment are processed asynchronously over RabbitMQ. If a step fails, a Saga with compensating transactions keeps the data consistent, and row-level locking handles concurrent stock updates.",
+        "tr": "Stok ve ödeme RabbitMQ üzerinden asenkron işleniyor. Bir adım başarısız olursa Saga ve telafi edici işlemler veriyi tutarlı tutuyor; eşzamanlı stok güncellemelerini row-level locking yönetiyor."
       },
       {
         "en": "An Nginx gateway handles routing, rate limiting and JWT authentication.",
@@ -968,21 +944,21 @@
     "name": "Inventory Management Microservices",
     "short_name": "Inventory",
     "tagline": {
-      "en": "A stock-tracking system of 4 Spring Boot services, each using the database that fits it best.",
-      "tr": "Her biri kendine uygun veritabanını kullanan 4 Spring Boot servisinden oluşan stok takip sistemi."
+      "en": "A stock-tracking system of four Spring Boot services, each using the database that suits it.",
+      "tr": "Her biri kendine uygun veritabanını kullanan dört Spring Boot servisinden oluşan bir stok takip sistemi."
     },
     "points": [
       {
-        "en": "Gateway, product, inventory and order services: MongoDB for products, MySQL for inventory and orders, with routing, CORS and OAuth2 centralized in Spring Cloud Gateway.",
-        "tr": "Gateway, product, inventory ve order servisleri: ürünler MongoDB'de, stok ve siparişler MySQL'de; yönlendirme, CORS ve OAuth2 Spring Cloud Gateway'de toplanmış."
+        "en": "I built gateway, product, inventory and order services. Products are stored in MongoDB, inventory and orders in MySQL.",
+        "tr": "Gateway, product, inventory ve order servislerini geliştirdim. Ürünler MongoDB'de, stok ve siparişler MySQL'de tutuluyor."
       },
       {
-        "en": "Integration tests with Testcontainers and RestAssured run against real MySQL and MongoDB instances.",
-        "tr": "Testcontainers ve RestAssured ile yazılan entegrasyon testleri gerçek MySQL ve MongoDB örneklerinde çalışıyor."
+        "en": "Spring Cloud Gateway handles routing, CORS and OAuth2 in one place. The Next.js frontend talks only to the gateway.",
+        "tr": "Yönlendirme, CORS ve OAuth2 tek yerde, Spring Cloud Gateway'de. Next.js arayüzü yalnızca gateway ile konuşuyor."
       },
       {
-        "en": "OpenAPI documentation, plus a Next.js + TailwindCSS frontend that works through the gateway.",
-        "tr": "OpenAPI dokümantasyonu ve gateway üzerinden çalışan bir Next.js + TailwindCSS arayüzü var."
+        "en": "I wrote integration tests with Testcontainers and RestAssured that run against real MySQL and MongoDB instances.",
+        "tr": "Testcontainers ve RestAssured ile gerçek MySQL ve MongoDB üzerinde çalışan entegrasyon testleri yazdım."
       }
     ],
     "technologies": [
